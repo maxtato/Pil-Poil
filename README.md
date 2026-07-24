@@ -21,7 +21,7 @@ Le jeu tient dans un seul fichier : ouvre `index.html` dans un navigateur, sur m
 
 ## Logo
 
-Le logo officiel vit dans `assets/` en très haute définition (2814×2312, fond transparent) :
+Le logo officiel vit dans `assets/` en ultra haute définition (5628×4624, fond transparent) :
 `logo-hd.png` (lettres noires, fonds clairs) et `logo-hd-nuit.png` (lettres blanches, fonds sombres).
 Le jeu embarque des versions WebP allégées et choisit automatiquement la bonne selon le thème.
 
