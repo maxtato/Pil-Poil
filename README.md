@@ -27,6 +27,8 @@ Le jeu embarque des versions WebP allégées et choisit automatiquement la bonne
 
 ## Historique
 
+- **v12.5** — refonte complète des 10 thèmes d'après la seconde planche : dix identités réellement distinctes (Blanc, Lilas, Menthe, Azur, Soleil, Rose, Corail bicolore, Encre, Abysse, Marine), bâties sur de grandes formes pleines qui débordent du cadre (cercles massifs, vagues, capsules, quarts de cercle) et des signes discrets (grilles de points, cercles creux, traits fins).
+
 - **v12.4** — logo bitmap officiel : détouré précisément du fond blanc, upscalé en très haute définition, variante nuit générée (lettres blanches, contre-formes transparentes), intégré au jeu avec bascule automatique selon le thème.
 - **v12.3** — règle de texte unifiée (noir sur fond clair ou pastel, blanc sur couleur franche) ; les étoiles de résultats et emblèmes or restent d'un jaune vif fixe.
 - **v12.2** — chaque thème a sa mise en scène propre, inspirée des maquettes : gerbes d'éclats autour de l'objectif, double anneau et tirets autour du bouton, trames de points en coin, halos, vagues, lune et étoiles.
