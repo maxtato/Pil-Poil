@@ -21,6 +21,7 @@ Le jeu tient dans un seul fichier : ouvre `index.html` dans un navigateur, sur m
 
 ## Historique
 
+- **v12.3** — règle de texte unifiée (noir sur fond clair ou pastel, blanc sur couleur franche) ; les étoiles de résultats et emblèmes or restent d'un jaune vif fixe.
 - **v12.2** — chaque thème a sa mise en scène propre, inspirée des maquettes : gerbes d'éclats autour de l'objectif, double anneau et tirets autour du bouton, trames de points en coin, halos, vagues, lune et étoiles.
 - **v12.1** — contrastes retravaillés et mesurés (accents, or adaptatif, pastilles de bilan).
 - **v12** — mode Survie, séries (combo), succès.

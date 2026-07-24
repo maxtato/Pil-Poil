@@ -14,8 +14,10 @@
        or    = navigation neutre (fermer, retour)
        vert  = action qui lance / sélection active
        rouge = quitter, effacer, duel  */
+  /* règle : texte quasi noir sur les teintes claires ou pastel,
+     blanc seulement sur les couleurs franches ou foncées */
   --ui-or:#F9DC6B;     --ui-or-txt:#17140F;
-  --ui-vert:#8AAE86;   --ui-vert-txt:#FFFFFF;
+  --ui-vert:#8AAE86;   --ui-vert-txt:#17140F;
   --ui-rouge:#E9556A;  --ui-rouge-txt:#FFFFFF;
   --ui-violet:#8B6FE8; --ui-violet-txt:#FFFFFF;
 }
@@ -165,7 +167,7 @@ body{
 .chip{background:rgba(var(--sur-rgb),.12);border-radius:99px;padding:6px 11px;
   font-size:10px;font-weight:900;letter-spacing:.08em;opacity:0;white-space:nowrap;
   animation:chipIn .32s ease-out forwards;}
-.chip.neuf{background:var(--or);color:var(--surOr,#17140F);}
+.chip.neuf{background:#E8A400;color:#17140F;}
 @keyframes chipIn{0%{opacity:0;transform:translateY(9px) scale(.85);}100%{opacity:1;transform:none;}}
 .carte-obj{margin-top:15px;padding-top:14px;border-top:2px solid rgba(var(--sur-rgb),.16);opacity:0;}
 .carte-obj.on{animation:objIn .44s cubic-bezier(.2,1.5,.35,1) forwards;}
@@ -183,7 +185,8 @@ body{
 @keyframes popPil{0%{transform:scale(.55);opacity:0}62%{transform:scale(1.12);opacity:1}100%{transform:scale(1);opacity:1}}
 .fen-et{display:flex;gap:13px;justify-content:center;margin-top:13px;min-height:32px;flex-wrap:wrap;}
 .fen-et .grp{display:flex;gap:1px;}
-.fen-et .et{font-size:26px;line-height:1;color:var(--or);opacity:0;
+.fen-et .et{font-size:26px;line-height:1;color:#F5C518;opacity:0;
+  text-shadow:0 1px 2px rgba(0,0,0,.25);
   animation:etIn .34s cubic-bezier(.2,1.5,.4,1) forwards;}
 .fen-et .et.off{color:var(--sur);opacity:.15;animation:none;}
 @keyframes etIn{0%{opacity:0;transform:scale(.3) rotate(-28deg);}
@@ -256,7 +259,7 @@ body{
   background:rgba(var(--sur-rgb),.16);overflow:hidden;}
 .jauge-niv span{display:block;height:100%;width:0;border-radius:99px;
   background:var(--ui-vert);transition:width .7s cubic-bezier(.2,.85,.3,1);}
-.jauge-niv.plein span{background:var(--or);}
+.jauge-niv.plein span{background:#E8A400;}
 .fb-j{width:100%;margin-top:12px;height:12px;background:rgba(var(--sur-rgb),.14);}
 .infos{position:relative;z-index:8;background:none;cursor:pointer;color:var(--sur);
   font-family:inherit;font-size:11px;font-weight:900;letter-spacing:.11em;
@@ -287,8 +290,8 @@ body{
 .ligne.vert .fl,.ligne.rouge .fl{opacity:.85;}
 .ligne.on{background:var(--ui-vert);color:var(--ui-vert-txt);}
 .ligne.on .e{opacity:.8;}
-.ligne.on .etoiles{color:#FFF0B8;}
-.ligne.on .etoiles .off{color:rgba(255,255,255,.35);}
+.ligne.on .etoiles{color:#F5C518;}
+.ligne.on .etoiles .off{color:rgba(23,20,15,.25);}
 .choix button.on{background:var(--ui-vert);color:var(--ui-vert-txt);}
 .ligne:active{filter:brightness(.93);}
 #f-modes [data-mode="campagne"]{background:var(--ui-or);color:var(--ui-or-txt);}
@@ -300,13 +303,14 @@ body{
 #f-modes [data-mode]:active{filter:brightness(.93);}
 .ligne .e{font-weight:900;opacity:.55;font-size:12.5px;margin-left:14px;}
 .ligne > span:first-child{display:flex;align-items:baseline;flex-wrap:wrap;gap:0 4px;}
-.ligne .etoiles{letter-spacing:1px;font-size:12px;color:#C8A93A;}
+/* les étoiles de résultat restent d'un jaune vif, partout, tout le temps */
+.ligne .etoiles{letter-spacing:1px;font-size:12px;color:#F5C518;}
 .ligne .etoiles .off{color:#CFC5AE;}
 .ligne .fl{font-weight:900;opacity:.45;}
 .reglette{display:flex;align-items:center;gap:10px;}
 .reglette .pas{width:56px;height:54px;border:none;border-radius:18px;
   background:#EFE4D3;font:inherit;font-size:25px;font-weight:900;cursor:pointer;color:#17140F;}
-.reglette .pas:active{background:var(--ui-vert);color:#fff;}
+.reglette .pas:active{background:var(--ui-vert);color:#17140F;}
 .reglette .valeur{flex:1;text-align:center;font-size:30px;font-weight:900;letter-spacing:-.02em;}
 .choix{display:flex;gap:6px;}
 .choix button{flex:1;border:none;border-radius:16px;background:#EFE4D3;
@@ -337,8 +341,8 @@ body{
 .classement{display:flex;flex-direction:column;gap:7px;}
 .rang{display:flex;align-items:center;gap:10px;border-radius:18px;
   padding:13px 15px;background:#EFE4D3;}
-.rang.premier{background:var(--ui-vert);color:#fff;}
-.rang.premier .det{opacity:.8;}
+.rang.premier{background:var(--ui-vert);color:#17140F;}
+.rang.premier .det{opacity:.7;}
 .rang .pion{width:20px;height:20px;border-radius:50%;flex:0 0 auto;}
 .rang .nom{flex:1;font-size:15px;font-weight:900;}
 .rang .det{font-size:11px;font-weight:800;opacity:.55;}
@@ -858,10 +862,10 @@ window.addEventListener("error", function(ev){
     s.setProperty("--ok",    f ? "#18885A" : "#45D392");
     s.setProperty("--moyen", f ? "#A87200" : "#F0C044");
     s.setProperty("--ko",    f ? "#D13E2C" : "#FF7565");
-    /* l'or sert de texte (gains, étoiles) : doré vif sur fond sombre,
-       bronze foncé sur fond clair, sinon il disparaît */
-    s.setProperty("--or",    f ? "#7A5200" : "#F5C518");
-    s.setProperty("--surOr", f ? "#FFFFFF" : "#17140F");
+    /* l'or en TEXTE (gains "+1 234") : doré vif sur fond sombre, bronze
+       foncé sur fond clair, sinon il disparaît. Les étoiles et pastilles,
+       elles, restent d'un or fixe et vif — ce sont des emblèmes. */
+    s.setProperty("--or", f ? "#7A5200" : "#F5C518");
     s.setProperty("--fond", t.fond); s.setProperty("--sur", t.sur);
     s.setProperty("--accent", t.accent); s.setProperty("--bouton", t.bouton);
     s.setProperty("--boutonB", t.boutonB); s.setProperty("--surBouton", t.surBouton);
