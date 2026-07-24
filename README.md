@@ -1,0 +1,25 @@
+# Pil Poil 🟡
+
+**Tape pile poil.** Un jeu de timing : un chrono démarre, à toi de taper exactement à la cible — à la seconde, au dixième, puis au centième près.
+
+Le jeu tient dans un seul fichier : ouvre `index.html` dans un navigateur, sur mobile ou sur ordinateur (Espace/Entrée fonctionnent aussi).
+
+## Modes de jeu
+
+| Mode | Principe |
+|---|---|
+| **Campagne** | 16 niveaux à difficulté croissante : plusieurs taps enchaînés, chrono qui s'efface, cibles révélées au dernier moment… 4 défis de départ (Facile, Normal, Difficile, Wanda). |
+| **Survie** | 3 vies, la difficulté grimpe à chaque manche réussie, sans plafond : au-delà du niveau 16, la fenêtre de tolérance continue de fondre. Record sauvegardé. |
+| **Entraînement** | Une cible au choix (1 à 10 s), répétée sans fin, avec suivi de ta moyenne et de ton meilleur écart. |
+| **Duel** | 2 à 4 joueurs sur le même appareil, chacun son tour, mêmes règles pour tous. |
+
+## Nouveautés de la v12
+
+- **Mode Survie** : 3 vies, difficulté sans plafond, record de score et de manche sauvegardé.
+- **Séries** : en campagne et en survie, les excellents (≤ 100 ms) enchaînés gonflent le gain de +5 % par étage, jusqu'à +50 %. Le multiplicateur s'affiche sur le gain (« +1 234 ×3 »).
+- **Succès** : 10 badges à débloquer (Pile Poil, Millimétré, En Fusion, Survivant…), avec notification en jeu et écran dédié dans Paramètres → Succès.
+
+## Historique
+
+- **v12** — mode Survie, séries (combo), succès.
+- **v11** — campagne par paliers de score (10 essais par niveau), duel, entraînement, 10 thèmes, sauvegarde de la progression.
