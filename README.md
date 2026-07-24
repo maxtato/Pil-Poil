@@ -21,5 +21,6 @@ Le jeu tient dans un seul fichier : ouvre `index.html` dans un navigateur, sur m
 
 ## Historique
 
+- **v12.1** — contrastes retravaillés (accents, or adaptatif, pastilles) et décors refaits : motifs variés (paillettes, cercles, anneaux, croix, points) semés sur une grille couvrant tout l'écran.
 - **v12** — mode Survie, séries (combo), succès.
 - **v11** — campagne par paliers de score (10 essais par niveau), duel, entraînement, 10 thèmes, sauvegarde de la progression.

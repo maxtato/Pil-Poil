@@ -165,7 +165,7 @@ body{
 .chip{background:rgba(var(--sur-rgb),.12);border-radius:99px;padding:6px 11px;
   font-size:10px;font-weight:900;letter-spacing:.08em;opacity:0;white-space:nowrap;
   animation:chipIn .32s ease-out forwards;}
-.chip.neuf{background:var(--or);color:#17140F;}
+.chip.neuf{background:var(--or);color:var(--surOr,#17140F);}
 @keyframes chipIn{0%{opacity:0;transform:translateY(9px) scale(.85);}100%{opacity:1;transform:none;}}
 .carte-obj{margin-top:15px;padding-top:14px;border-top:2px solid rgba(var(--sur-rgb),.16);opacity:0;}
 .carte-obj.on{animation:objIn .44s cubic-bezier(.2,1.5,.35,1) forwards;}
@@ -600,17 +600,19 @@ window.addEventListener("error", function(ev){
 (function(){
   "use strict";
 
+  /* Les accents servent de texte (l'objectif, surtout) : chacun est calé
+     au-dessus de 4.5:1 de contraste sur son fond, mesuré, pas au jugé. */
   var THEMES = [
-    {id:"crème",   nom:"CRÈME",   fond:"#F5EFE5", sur:"#17140F", accent:"#1C8280", bouton:"#F5C518", boutonB:"#CE9F10", surBouton:"#17140F", deco:["confettis"]},
-    {id:"halo",    nom:"HALO",    fond:"#F7EFE6", sur:"#17140F", accent:"#E9556A", bouton:"#E9556A", boutonB:"#BE3A4E", surBouton:"#FFFFFF", deco:["gros-halo","confettis"]},
-    {id:"menthe",  nom:"MENTHE",  fond:"#E6F1EC", sur:"#17140F", accent:"#1C8280", bouton:"#2FA0A0", boutonB:"#217B78", surBouton:"#FFFFFF", deco:["vague","bulles"]},
-    {id:"lagon",   nom:"LAGON",   fond:"#6EC4C0", sur:"#17140F", accent:"#17140F", bouton:"#F5C518", boutonB:"#CE9F10", surBouton:"#17140F", deco:["pois"]},
-    {id:"soleil",  nom:"SOLEIL",  fond:"#F7C51E", sur:"#17140F", accent:"#B8351F", bouton:"#E9556A", boutonB:"#BE3A4E", surBouton:"#FFFFFF", deco:["eclats","pois"]},
-    {id:"rose",    nom:"ROSE",    fond:"#F7EFE6", sur:"#17140F", accent:"#E9556A", bouton:"#E9556A", boutonB:"#BE3A4E", surBouton:"#FFFFFF", deco:["confettis","lueur"]},
-    {id:"sourire", nom:"SOURIRE", fond:"#F7EFE6", sur:"#17140F", accent:"#1C8280", bouton:"#2FA0A0", boutonB:"#217B78", surBouton:"#FFFFFF", deco:["trait","eclats"]},
-    {id:"encre",   nom:"ENCRE",   fond:"#111111", sur:"#FFFFFF", accent:"#F5C518", bouton:"#F5C518", boutonB:"#CE9F10", surBouton:"#17140F", deco:["etincelles","anneau"]},
-    {id:"onyx",    nom:"ONYX",    fond:"#121212", sur:"#FFFFFF", accent:"#F5C518", bouton:"#F5C518", boutonB:"#CE9F10", surBouton:"#17140F", deco:["vague","poussiere"]},
-    {id:"nuit",    nom:"NUIT",    fond:"#241E37", sur:"#FFFFFF", accent:"#A78BFA", bouton:"#8B6FE8", boutonB:"#6B51C4", surBouton:"#FFFFFF", deco:["etoiles","lueur"]}
+    {id:"crème",   nom:"CRÈME",   fond:"#F5EFE5", sur:"#17140F", accent:"#166B69", bouton:"#F5C518", boutonB:"#CE9F10", surBouton:"#17140F", deco:["confettis","paillettes"]},
+    {id:"halo",    nom:"HALO",    fond:"#F7EFE6", sur:"#17140F", accent:"#C22F45", bouton:"#E9556A", boutonB:"#BE3A4E", surBouton:"#FFFFFF", deco:["gros-halo","confettis","anneaux"]},
+    {id:"menthe",  nom:"MENTHE",  fond:"#E6F1EC", sur:"#17140F", accent:"#166B69", bouton:"#2FA0A0", boutonB:"#217B78", surBouton:"#FFFFFF", deco:["vague","bulles","anneaux"]},
+    {id:"lagon",   nom:"LAGON",   fond:"#6EC4C0", sur:"#17140F", accent:"#17140F", bouton:"#F5C518", boutonB:"#CE9F10", surBouton:"#17140F", deco:["pois","cercles","paillettes"]},
+    {id:"soleil",  nom:"SOLEIL",  fond:"#F7C51E", sur:"#17140F", accent:"#8F2A14", bouton:"#E9556A", boutonB:"#BE3A4E", surBouton:"#FFFFFF", deco:["eclats","cercles","paillettes"]},
+    {id:"rose",    nom:"ROSE",    fond:"#F7EFE6", sur:"#17140F", accent:"#C22F45", bouton:"#E9556A", boutonB:"#BE3A4E", surBouton:"#FFFFFF", deco:["lueur","cercles","paillettes"]},
+    {id:"sourire", nom:"SOURIRE", fond:"#F7EFE6", sur:"#17140F", accent:"#166B69", bouton:"#2FA0A0", boutonB:"#217B78", surBouton:"#FFFFFF", deco:["trait","croix","cercles"]},
+    {id:"encre",   nom:"ENCRE",   fond:"#111111", sur:"#FFFFFF", accent:"#F5C518", bouton:"#F5C518", boutonB:"#CE9F10", surBouton:"#17140F", deco:["anneau","etincelles","anneaux","points"]},
+    {id:"onyx",    nom:"ONYX",    fond:"#121212", sur:"#FFFFFF", accent:"#F5C518", bouton:"#F5C518", boutonB:"#CE9F10", surBouton:"#17140F", deco:["vague","poussiere","paillettes","anneaux"]},
+    {id:"nuit",    nom:"NUIT",    fond:"#241E37", sur:"#FFFFFF", accent:"#A78BFA", bouton:"#8B6FE8", boutonB:"#6B51C4", surBouton:"#FFFFFF", deco:["etoiles","lueur","points","anneaux"]}
   ];
   var themeChoisi = null, dernierTheme = -1;   // null = un thème différent à chaque manche
 
@@ -622,11 +624,13 @@ window.addEventListener("error", function(ev){
     {id:"wanda",     nom:"WANDA",     depart:13, desc:"niv. 13 · dixièmes et centièmes"}
   ];
 
-  /* paliers de réussite, du plus serré au plus large */
+  /* paliers de réussite, du plus serré au plus large.
+     couleur = teinte du texte (adaptée au fond via --or / --ok),
+     pil / pilTxt = pastille du bilan, fixes et toujours lisibles. */
   var PALIERS = [
-    {seuil:function(){ return 30; },  nom:"PILE POIL", base:1000, etoiles:3, couleur:"var(--or)",   fete:22},
-    {seuil:function(){ return 100; }, nom:"EXCELLENT", base:620,  etoiles:2, couleur:"var(--vert)", fete:12},
-    {seuil:function(t){ return t; },  nom:"BIEN",      base:320,  etoiles:1, couleur:"var(--vert)", fete:0}
+    {seuil:function(){ return 30; },  nom:"PILE POIL", base:1000, etoiles:3, couleur:"var(--or)", pil:"#E8A400", pilTxt:"#17140F", fete:22},
+    {seuil:function(){ return 100; }, nom:"EXCELLENT", base:620,  etoiles:2, couleur:"var(--ok)", pil:"#1E9E6A", pilTxt:"#FFFFFF", fete:12},
+    {seuil:function(t){ return t; },  nom:"BIEN",      base:320,  etoiles:1, couleur:"var(--ok)", pil:"#1E9E6A", pilTxt:"#FFFFFF", fete:0}
   ];
 
   /* succès : des jalons à débloquer, tous modes confondus.
@@ -679,6 +683,11 @@ window.addEventListener("error", function(ev){
     f = f || 0.72;
     var n = parseInt(hex.slice(1), 16);
     var c = [(n >> 16) & 255, (n >> 8) & 255, n & 255].map(function(v){ return Math.round(v * f); });
+    return "#" + ((1 << 24) + (c[0] << 16) + (c[1] << 8) + c[2]).toString(16).slice(1);
+  }
+  function eclaircir(hex, k){                    // mélange vers le blanc
+    var n = parseInt(hex.slice(1), 16);
+    var c = [(n >> 16) & 255, (n >> 8) & 255, n & 255].map(function(v){ return Math.round(v + (255 - v) * k); });
     return "#" + ((1 << 24) + (c[0] << 16) + (c[1] << 8) + c[2]).toString(16).slice(1);
   }
 
@@ -792,8 +801,45 @@ window.addEventListener("error", function(ev){
   /* ================== décor ================== */
   function alea(a,b){ return a + Math.random() * (b - a); }
   function etincelle(x,y,t,c,o){
-    return '<svg style="left:'+x+'%;top:'+y+'%;width:'+t+'px;height:'+t+'px;opacity:'+o+'" viewBox="0 0 20 20">' +
+    return '<svg style="left:'+(+x).toFixed(1)+'%;top:'+(+y).toFixed(1)+'%;width:'+Math.round(t)+'px;height:'+Math.round(t)+'px;opacity:'+o+'" viewBox="0 0 20 20">' +
            '<path d="M10 0c.7 5.5 3.8 8.6 10 10-6.2 1.4-9.3 4.5-10 10-.7-5.5-3.8-8.6-10-10C6.2 8.6 9.3 5.5 10 0z" fill="'+c+'"/></svg>';
+  }
+  /* ---- petits motifs ---- */
+  function mPastille(x,y,d,c,o){
+    return '<span class="conf" style="left:'+x.toFixed(1)+'%;top:'+y.toFixed(1)+'%;width:'+Math.round(d)+'px;height:'+Math.round(d)+'px;background:'+c+';opacity:'+o+'"></span>';
+  }
+  function mAnneau(x,y,d,c,o){
+    return '<span class="conf" style="left:'+x.toFixed(1)+'%;top:'+y.toFixed(1)+'%;width:'+Math.round(d)+'px;height:'+Math.round(d)+'px;background:none;border:2px solid '+c+';opacity:'+o+'"></span>';
+  }
+  function mBaton(x,y,l,c,o){
+    return '<span class="conf" style="left:'+x.toFixed(1)+'%;top:'+y.toFixed(1)+'%;width:'+Math.round(l)+'px;height:'+alea(3,4.5).toFixed(1)+'px;background:'+c+';transform:rotate('+alea(-80,80).toFixed(0)+'deg);opacity:'+o+'"></span>';
+  }
+  function mCroix(x,y,t,c,o){
+    return '<svg style="left:'+x.toFixed(1)+'%;top:'+y.toFixed(1)+'%;width:'+Math.round(t)+'px;height:'+Math.round(t)+'px;opacity:'+o+';transform:rotate('+alea(-30,30).toFixed(0)+'deg)" viewBox="0 0 10 10">' +
+           '<path d="M5 1v8M1 5h8" stroke="'+c+'" stroke-width="2" stroke-linecap="round"/></svg>';
+  }
+  /* Chaque motif tombe dans une case différente d'une grille qui contourne
+     le chrono et le bouton : le décor couvre tout le cadre, sans amas
+     ni zone vide, et sans jamais gêner la lecture. */
+  var CASES = [
+    [5,20,13,26],[40,60,12,21],[80,94,13,26],
+    [23,38,15,25],[62,77,15,25],
+    [3,15,32,48],[85,96,32,48],
+    [3,15,54,70],[85,96,54,70],
+    [6,21,76,92],[79,93,76,92],
+    [24,38,84,93],[62,76,84,93]
+  ];
+  function semer(n, gen){
+    var ordre = CASES.slice(), i, j, t, h = "";
+    for(i = ordre.length - 1; i > 0; i--){       // mélange des cases
+      j = (Math.random() * (i + 1)) | 0;
+      t = ordre[i]; ordre[i] = ordre[j]; ordre[j] = t;
+    }
+    for(i = 0; i < n && i < ordre.length; i++){
+      var c = ordre[i];
+      h += gen(alea(c[0], c[1]), alea(c[2], c[3]), i);
+    }
+    return h;
   }
   function rgbDe(hex){
     var n = parseInt(hex.slice(1), 16);
@@ -803,7 +849,9 @@ window.addEventListener("error", function(ev){
     var c = rgbDe(hex);
     return (0.2126*c[0] + 0.7152*c[1] + 0.0722*c[2]) > 128;
   }
+  var themeCourant = null;
   function appliquerTheme(t){
+    themeCourant = t;
     var s = els.cadre.style;
     var rs = rgbDe(t.sur);
     s.setProperty("--sur-rgb", rs[0] + "," + rs[1] + "," + rs[2]);
@@ -811,6 +859,10 @@ window.addEventListener("error", function(ev){
     s.setProperty("--ok",    f ? "#18885A" : "#45D392");
     s.setProperty("--moyen", f ? "#A87200" : "#F0C044");
     s.setProperty("--ko",    f ? "#D13E2C" : "#FF7565");
+    /* l'or sert de texte (gains, étoiles) : doré vif sur fond sombre,
+       bronze foncé sur fond clair, sinon il disparaît */
+    s.setProperty("--or",    f ? "#7A5200" : "#F5C518");
+    s.setProperty("--surOr", f ? "#FFFFFF" : "#17140F");
     s.setProperty("--fond", t.fond); s.setProperty("--sur", t.sur);
     s.setProperty("--accent", t.accent); s.setProperty("--bouton", t.bouton);
     s.setProperty("--boutonB", t.boutonB); s.setProperty("--surBouton", t.surBouton);
@@ -819,37 +871,45 @@ window.addEventListener("error", function(ev){
     els.anneau.style.display = t.deco.indexOf("anneau") >= 0 ? "block" : "none";
     els.lueur.style.display  = t.deco.indexOf("lueur")  >= 0 ? "block" : "none";
 
-    var h = "", i, palette = ["#F5C518","#E9556A","#2FA0A0","#17140F"];
+    /* ---- semis des motifs : chaque famille se répartit sur la grille ---- */
+    var h = "", palette = ["#F5C518","#E9556A","#2FA0A0","#8B6FE8"];
+    var pail = f ? t.accent : "#F5C518";           // teinte des paillettes
     if(t.deco.indexOf("confettis") >= 0){
-      for(i = 0; i < 14; i++){
-        h += '<span class="conf" style="left:'+alea(4,92).toFixed(1)+'%;top:'+(Math.random()<.5?alea(16,30):alea(66,90)).toFixed(1)+
-             '%;width:'+alea(5,11).toFixed(0)+'px;height:'+alea(3,4.5).toFixed(1)+'px;background:'+
-             palette[(Math.random()*palette.length)|0]+';transform:rotate('+alea(-70,70).toFixed(0)+'deg);opacity:.85"></span>';
-      }
+      h += semer(10, function(x,y,i){ return mBaton(x, y, alea(6,12), palette[i % palette.length], .85); });
     }
     if(t.deco.indexOf("eclats") >= 0){
-      for(i = 0; i < 9; i++){
-        h += '<span class="conf" style="left:'+alea(6,90).toFixed(1)+'%;top:'+(Math.random()<.5?alea(18,30):alea(70,88)).toFixed(1)+
-             '%;width:'+alea(8,15).toFixed(0)+'px;height:3px;background:'+t.sur+';transform:rotate('+alea(-80,80).toFixed(0)+'deg);opacity:.7"></span>';
-      }
+      h += semer(8, function(x,y){ return mBaton(x, y, alea(9,16), t.sur, .65); });
+    }
+    if(t.deco.indexOf("paillettes") >= 0){
+      h += semer(7, function(x,y,i){ return etincelle(x, y, alea(9,18), i % 3 === 0 ? "#F5C518" : pail, .75); });
+    }
+    if(t.deco.indexOf("cercles") >= 0){
+      h += semer(8, function(x,y,i){ return mPastille(x, y, alea(6,15), i % 2 ? t.bouton : t.accent, alea(.3,.55).toFixed(2)); });
+    }
+    if(t.deco.indexOf("anneaux") >= 0){
+      h += semer(6, function(x,y,i){ return mAnneau(x, y, alea(10,24), i % 2 ? t.accent : t.sur, .35); });
+    }
+    if(t.deco.indexOf("croix") >= 0){
+      h += semer(5, function(x,y){ return mCroix(x, y, alea(8,13), t.accent, .55); });
+    }
+    if(t.deco.indexOf("points") >= 0){
+      h += semer(9, function(x,y){ return mPastille(x, y, alea(3,5), t.sur, .4); });
     }
     if(t.deco.indexOf("bulles") >= 0){
-      for(i = 0; i < 6; i++){
-        var d = alea(7,13);
-        h += '<span class="conf" style="left:'+alea(6,90).toFixed(1)+'%;top:'+alea(18,86).toFixed(1)+
-             '%;width:'+d.toFixed(0)+'px;height:'+d.toFixed(0)+'px;background:'+t.accent+';opacity:.5"></span>';
-      }
+      h += semer(7, function(x,y,i){
+        return i % 3 === 2 ? mAnneau(x, y, alea(9,16), t.accent, .4)
+                           : mPastille(x, y, alea(6,13), t.accent, alea(.3,.5).toFixed(2));
+      });
     }
     if(t.deco.indexOf("etincelles") >= 0){
-      var pts = [[10,20],[86,17],[7,64],[90,58],[16,84],[80,80]];
-      for(i = 0; i < pts.length; i++) h += etincelle(pts[i][0], pts[i][1], alea(11,20), "#F5C518", .8);
+      h += semer(7, function(x,y){ return etincelle(x, y, alea(10,20), "#F5C518", .85); });
     }
     if(t.deco.indexOf("etoiles") >= 0){
-      var e2 = [[12,22],[84,19],[9,58],[88,52],[20,78],[78,74],[50,14]];
-      for(i = 0; i < e2.length; i++) h += etincelle(e2[i][0], e2[i][1], alea(8,15), "#C4B5FD", .8);
+      h += semer(8, function(x,y,i){ return etincelle(x, y, alea(8,15), i % 4 === 3 ? "#F5C518" : "#C4B5FD", .8); });
       h += '<svg style="right:14%;top:12%;width:26px;height:26px" viewBox="0 0 24 24">' +
            '<path d="M20 15.5A8.5 8.5 0 0 1 9.2 4.2a8.5 8.5 0 1 0 10.8 11.3z" fill="#F5C518" opacity=".9"/></svg>';
     }
+    /* ---- grands éléments structurants, à position fixe ---- */
     if(t.deco.indexOf("pois") >= 0){
       h += '<span class="pois" style="left:-16px;bottom:6%;color:'+t.sur+'"></span>' +
            '<span class="pois" style="right:-24px;top:26%;color:'+t.sur+';opacity:.35"></span>';
@@ -1207,9 +1267,11 @@ window.addEventListener("error", function(ev){
   function habillerMode(){
     if(MODE === "duel" && duel.joueurs.length){
       var j = duel.joueurs[duel.tour];
+      var fonce = themeCourant && !clair(themeCourant.fond);
       els.cadre.style.setProperty("--bouton", j.couleur);
       els.cadre.style.setProperty("--boutonB", assombrir(j.couleur));
-      els.cadre.style.setProperty("--accent", j.couleur);
+      // en texte sur fond sombre, la couleur du joueur s'éclaircit pour rester lisible
+      els.cadre.style.setProperty("--accent", fonce ? eclaircir(j.couleur, 0.42) : j.couleur);
     }
   }
 
@@ -1360,7 +1422,8 @@ window.addEventListener("error", function(ev){
 
     /* ---- la fenêtre de bilan ---- */
     els.fbPil.textContent = sansFaute ? "SANS-FAUTE" : (palier ? palier.nom : (auto ? "TROP TARD" : "RATÉ"));
-    els.fbPil.style.background = sansFaute ? "var(--or)" : (palier ? palier.couleur : "var(--rouge)");
+    els.fbPil.style.background = sansFaute ? "#E8A400" : (palier ? palier.pil : "var(--rouge)");
+    els.fbPil.style.color = sansFaute ? "#17140F" : (palier ? palier.pilTxt : "#FFFFFF");
     els.fbPil.classList.remove("on");
     els.fbRes.classList.remove("on"); els.fbPts.classList.remove("on");
     els.btnContinuer.classList.remove("on");
@@ -1412,6 +1475,7 @@ window.addEventListener("error", function(ev){
       if(survie.vies <= 0){
         els.fbPil.textContent = "PLUS DE VIES";
         els.fbPil.style.background = "var(--rouge)";
+        els.fbPil.style.color = "#FFFFFF";
         els.btnContinuer.textContent = "VOIR LE SCORE";
       }
     } else {
@@ -1423,6 +1487,7 @@ window.addEventListener("error", function(ev){
       if(reste === 0){
         els.fbPil.textContent = jeu.niveauReussi ? "NIVEAU RÉUSSI" : "NIVEAU MANQUÉ";
         els.fbPil.style.background = jeu.niveauReussi ? "var(--vert)" : "var(--rouge)";
+        els.fbPil.style.color = "#FFFFFF";
       }
     }
     els.fbExtra.textContent = extra;
@@ -1451,7 +1516,7 @@ window.addEventListener("error", function(ev){
     var tFin = 420 + et.allumees * 115 + 240;
     planifier(function(){
       els.fbRes.classList.add("on"); els.fbPts.classList.add("on");
-      if(sansFaute){ fete(22, "var(--or)"); vibrer([12,30,12,30,18]); fanfare(4); }
+      if(sansFaute){ fete(22, "#F5C518"); vibrer([12,30,12,30,18]); fanfare(4); }
       else if(palier && et.allumees >= jeu.cfg.taps * 3 - 1) fete(16, "var(--vert)");
     }, tFin);
     planifier(function(){
@@ -1474,14 +1539,15 @@ window.addEventListener("error", function(ev){
     var p = progres[jeu.defi.id] || {score:0, niveau:0};
     var record = jeu.recordBattu && jeu.score > 0;
     els.pilule.textContent = victoire ? "CAMPAGNE BOUCLÉE" : (record ? "NOUVEAU RECORD" : "PARTIE TERMINÉE");
-    els.pilule.style.background = (victoire || record) ? "var(--or)" : "var(--rouge)";
+    els.pilule.style.background = (victoire || record) ? "#E8A400" : "var(--rouge)";
+    els.pilule.style.color = (victoire || record) ? "#17140F" : "#FFFFFF";
     els.pilule.classList.remove("on"); void els.pilule.offsetWidth; els.pilule.classList.add("on");
     els.objL.textContent = "SCORE FINAL · " + jeu.defi.nom;
     els.objV.style.display = "none";
     els.chrono.textContent = milliers(jeu.score);
     els.infos.textContent = "RECORD " + milliers(p.score || 0) + " · NIVEAU ATTEINT " + jeu.niveau;
     els.tap.textContent = "REJOUER";
-    if(victoire || record){ fete(24, "var(--or)"); fanfare(4); }
+    if(victoire || record){ fete(24, "#F5C518"); fanfare(4); }
     jeu.verrou = performance.now() + 250;
   }
 
@@ -1543,14 +1609,15 @@ window.addEventListener("error", function(ev){
     if(survie.manche > (r.manche || 0)) r.manche = survie.manche;
     progres._survie = r; sauver();
     els.pilule.textContent = record ? "NOUVEAU RECORD" : "PARTIE TERMINÉE";
-    els.pilule.style.background = record ? "var(--or)" : "var(--rouge)";
+    els.pilule.style.background = record ? "#E8A400" : "var(--rouge)";
+    els.pilule.style.color = record ? "#17140F" : "#FFFFFF";
     els.pilule.classList.remove("on"); void els.pilule.offsetWidth; els.pilule.classList.add("on");
     els.objL.textContent = "SCORE FINAL · SURVIE";
     els.objV.style.display = "none";
     els.chrono.textContent = milliers(jeu.score);
     els.infos.textContent = "RECORD " + milliers(r.score || 0) + " · MANCHE " + survie.manche;
     els.tap.textContent = "REJOUER";
-    if(record){ fete(24, "var(--or)"); fanfare(4); }
+    if(record){ fete(24, "#F5C518"); fanfare(4); }
     jeu.verrou = performance.now() + 250;
   }
   function majSurvieFiche(){
@@ -1604,7 +1671,7 @@ window.addEventListener("error", function(ev){
              '<span class="pts">' + milliers(j.score) + '</span></div>';
     }).join("");
     ouvrir("classement");
-    fete(24, "var(--or)"); fanfare(4);
+    fete(24, "#F5C518"); fanfare(4);
   }
 
   /* ================== entrées ================== */
