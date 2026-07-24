@@ -240,6 +240,8 @@ body{
 .bas{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:14px;}
 .enveloppe{position:relative;display:flex;align-items:center;justify-content:center;}
 .anneau{position:absolute;width:158px;height:158px;border-radius:50%;border:2px solid var(--bouton);opacity:.35;}
+/* second anneau concentrique, plus discret : l'effet "cible" des thèmes sombres */
+.anneau::after{content:"";position:absolute;inset:-13px;border:1px solid var(--bouton);border-radius:50%;opacity:.55;}
 .lueur{position:absolute;width:190px;height:190px;border-radius:50%;
   background:radial-gradient(closest-side, var(--bouton), transparent);opacity:.22;}
 .tap{position:relative;width:128px;height:128px;border-radius:50%;border:none;
@@ -603,16 +605,16 @@ window.addEventListener("error", function(ev){
   /* Les accents servent de texte (l'objectif, surtout) : chacun est calé
      au-dessus de 4.5:1 de contraste sur son fond, mesuré, pas au jugé. */
   var THEMES = [
-    {id:"crème",   nom:"CRÈME",   fond:"#F5EFE5", sur:"#17140F", accent:"#166B69", bouton:"#F5C518", boutonB:"#CE9F10", surBouton:"#17140F", deco:["confettis","paillettes"]},
-    {id:"halo",    nom:"HALO",    fond:"#F7EFE6", sur:"#17140F", accent:"#C22F45", bouton:"#E9556A", boutonB:"#BE3A4E", surBouton:"#FFFFFF", deco:["gros-halo","confettis","anneaux"]},
-    {id:"menthe",  nom:"MENTHE",  fond:"#E6F1EC", sur:"#17140F", accent:"#166B69", bouton:"#2FA0A0", boutonB:"#217B78", surBouton:"#FFFFFF", deco:["vague","bulles","anneaux"]},
-    {id:"lagon",   nom:"LAGON",   fond:"#6EC4C0", sur:"#17140F", accent:"#17140F", bouton:"#F5C518", boutonB:"#CE9F10", surBouton:"#17140F", deco:["pois","cercles","paillettes"]},
-    {id:"soleil",  nom:"SOLEIL",  fond:"#F7C51E", sur:"#17140F", accent:"#8F2A14", bouton:"#E9556A", boutonB:"#BE3A4E", surBouton:"#FFFFFF", deco:["eclats","cercles","paillettes"]},
-    {id:"rose",    nom:"ROSE",    fond:"#F7EFE6", sur:"#17140F", accent:"#C22F45", bouton:"#E9556A", boutonB:"#BE3A4E", surBouton:"#FFFFFF", deco:["lueur","cercles","paillettes"]},
-    {id:"sourire", nom:"SOURIRE", fond:"#F7EFE6", sur:"#17140F", accent:"#166B69", bouton:"#2FA0A0", boutonB:"#217B78", surBouton:"#FFFFFF", deco:["trait","croix","cercles"]},
-    {id:"encre",   nom:"ENCRE",   fond:"#111111", sur:"#FFFFFF", accent:"#F5C518", bouton:"#F5C518", boutonB:"#CE9F10", surBouton:"#17140F", deco:["anneau","etincelles","anneaux","points"]},
-    {id:"onyx",    nom:"ONYX",    fond:"#121212", sur:"#FFFFFF", accent:"#F5C518", bouton:"#F5C518", boutonB:"#CE9F10", surBouton:"#17140F", deco:["vague","poussiere","paillettes","anneaux"]},
-    {id:"nuit",    nom:"NUIT",    fond:"#241E37", sur:"#FFFFFF", accent:"#A78BFA", bouton:"#8B6FE8", boutonB:"#6B51C4", surBouton:"#FFFFFF", deco:["etoiles","lueur","points","anneaux"]}
+    {id:"crème",   nom:"CRÈME",   fond:"#F5EFE5", sur:"#17140F", accent:"#166B69", bouton:"#F5C518", boutonB:"#CE9F10", surBouton:"#17140F", deco:["eclats-chrono","pastilles"]},
+    {id:"halo",    nom:"HALO",    fond:"#F7EFE6", sur:"#17140F", accent:"#C22F45", bouton:"#E9556A", boutonB:"#BE3A4E", surBouton:"#FFFFFF", deco:["gros-halo","confettis-hauts"]},
+    {id:"menthe",  nom:"MENTHE",  fond:"#E6F1EC", sur:"#17140F", accent:"#166B69", bouton:"#2FA0A0", boutonB:"#217B78", surBouton:"#FFFFFF", deco:["vague","bulles"]},
+    {id:"lagon",   nom:"LAGON",   fond:"#6EC4C0", sur:"#17140F", accent:"#17140F", bouton:"#F5C518", boutonB:"#CE9F10", surBouton:"#17140F", deco:["pois","pastilles-sombres"]},
+    {id:"soleil",  nom:"SOLEIL",  fond:"#F7C51E", sur:"#17140F", accent:"#8F2A14", bouton:"#E9556A", boutonB:"#BE3A4E", surBouton:"#FFFFFF", deco:["eclats-chrono","pois-droit"]},
+    {id:"rose",    nom:"ROSE",    fond:"#F7EFE6", sur:"#17140F", accent:"#C22F45", bouton:"#E9556A", boutonB:"#BE3A4E", surBouton:"#FFFFFF", deco:["halo-tap","confettis-hauts"]},
+    {id:"sourire", nom:"SOURIRE", fond:"#F7EFE6", sur:"#17140F", accent:"#166B69", bouton:"#2FA0A0", boutonB:"#217B78", surBouton:"#FFFFFF", deco:["trait","eclats-chrono"]},
+    {id:"encre",   nom:"ENCRE",   fond:"#111111", sur:"#FFFFFF", accent:"#F5C518", bouton:"#F5C518", boutonB:"#CE9F10", surBouton:"#17140F", deco:["anneau","paillettes-or","tirets-tap"]},
+    {id:"onyx",    nom:"ONYX",    fond:"#121212", sur:"#FFFFFF", accent:"#F5C518", bouton:"#F5C518", boutonB:"#CE9F10", surBouton:"#17140F", deco:["vague-basse","poussiere","eclats-chrono"]},
+    {id:"nuit",    nom:"NUIT",    fond:"#241E37", sur:"#FFFFFF", accent:"#A78BFA", bouton:"#8B6FE8", boutonB:"#6B51C4", surBouton:"#FFFFFF", deco:["etoiles","lune","lueur","anneau"]}
   ];
   var themeChoisi = null, dernierTheme = -1;   // null = un thème différent à chaque manche
 
@@ -814,13 +816,9 @@ window.addEventListener("error", function(ev){
   function mBaton(x,y,l,c,o){
     return '<span class="conf" style="left:'+x.toFixed(1)+'%;top:'+y.toFixed(1)+'%;width:'+Math.round(l)+'px;height:'+alea(3,4.5).toFixed(1)+'px;background:'+c+';transform:rotate('+alea(-80,80).toFixed(0)+'deg);opacity:'+o+'"></span>';
   }
-  function mCroix(x,y,t,c,o){
-    return '<svg style="left:'+x.toFixed(1)+'%;top:'+y.toFixed(1)+'%;width:'+Math.round(t)+'px;height:'+Math.round(t)+'px;opacity:'+o+';transform:rotate('+alea(-30,30).toFixed(0)+'deg)" viewBox="0 0 10 10">' +
-           '<path d="M5 1v8M1 5h8" stroke="'+c+'" stroke-width="2" stroke-linecap="round"/></svg>';
-  }
   /* Chaque motif tombe dans une case différente d'une grille qui contourne
-     le chrono et le bouton : le décor couvre tout le cadre, sans amas
-     ni zone vide, et sans jamais gêner la lecture. */
+     le chrono et le bouton : le décor couvre le cadre sans amas ni zone
+     vide, et sans jamais gêner la lecture. */
   var CASES = [
     [5,20,13,26],[40,60,12,21],[80,94,13,26],
     [23,38,15,25],[62,77,15,25],
@@ -829,8 +827,9 @@ window.addEventListener("error", function(ev){
     [6,21,76,92],[79,93,76,92],
     [24,38,84,93],[62,76,84,93]
   ];
-  function semer(n, gen){
-    var ordre = CASES.slice(), i, j, t, h = "";
+  var Z_HAUT = CASES.slice(0, 5), Z_COTES = CASES.slice(5, 9), Z_BAS = CASES.slice(9);
+  function semer(n, gen, zones){
+    var ordre = (zones || CASES).slice(), i, j, t, h = "";
     for(i = ordre.length - 1; i > 0; i--){       // mélange des cases
       j = (Math.random() * (i + 1)) | 0;
       t = ordre[i]; ordre[i] = ordre[j]; ordre[j] = t;
@@ -871,61 +870,91 @@ window.addEventListener("error", function(ev){
     els.anneau.style.display = t.deco.indexOf("anneau") >= 0 ? "block" : "none";
     els.lueur.style.display  = t.deco.indexOf("lueur")  >= 0 ? "block" : "none";
 
-    /* ---- semis des motifs : chaque famille se répartit sur la grille ---- */
-    var h = "", palette = ["#F5C518","#E9556A","#2FA0A0","#8B6FE8"];
-    var pail = f ? t.accent : "#F5C518";           // teinte des paillettes
-    if(t.deco.indexOf("confettis") >= 0){
-      h += semer(10, function(x,y,i){ return mBaton(x, y, alea(6,12), palette[i % palette.length], .85); });
+    /* ---- décor : chaque thème a sa propre mise en scène, sobre et placée —
+       des éléments qui accompagnent l'objectif, le chrono ou le bouton,
+       pas une pluie uniforme de motifs ---- */
+    var h = "", i, palette = ["#F5C518","#E9556A","#2FA0A0","#8B6FE8"];
+    var ECLATS = {
+      "crème":["#E9556A","#2FA0A0"], "soleil":["#8F2A14","#177674"],
+      "sourire":["#166B69","#E9556A"], "onyx":["#F5C518"]
+    };
+    if(t.deco.indexOf("eclats-chrono") >= 0){
+      // deux gerbes de tirets qui encadrent l'objectif, orientées vers lui
+      var ec = ECLATS[t.id] || [t.accent], g;
+      var gerbe = [[19,32],[24,29],[29,33]];
+      for(i = 0; i < 3; i++){
+        g = gerbe[i];
+        h += '<span class="conf" style="left:'+(g[0]+alea(-1.5,1.5)).toFixed(1)+'%;top:'+(g[1]+alea(-1,1)).toFixed(1)+
+             '%;width:'+alea(9,14).toFixed(0)+'px;height:3.5px;background:'+ec[i % ec.length]+
+             ';transform:rotate('+alea(32,58).toFixed(0)+'deg);opacity:.9"></span>';
+        h += '<span class="conf" style="left:'+(97-g[0]+alea(-1.5,1.5)).toFixed(1)+'%;top:'+(g[1]+alea(-1,1)).toFixed(1)+
+             '%;width:'+alea(9,14).toFixed(0)+'px;height:3.5px;background:'+ec[(i+1) % ec.length]+
+             ';transform:rotate('+alea(-58,-32).toFixed(0)+'deg);opacity:.9"></span>';
+      }
     }
-    if(t.deco.indexOf("eclats") >= 0){
-      h += semer(8, function(x,y){ return mBaton(x, y, alea(9,16), t.sur, .65); });
+    if(t.deco.indexOf("confettis-hauts") >= 0){
+      // une poignée de confettis fins dans le tiers haut, deux échappés en bas
+      h += semer(5, function(x,y,k){ return mBaton(x, y, alea(6,11), palette[k % palette.length], .8); }, Z_HAUT);
+      h += semer(2, function(x,y,k){ return mBaton(x, y, alea(6,10), palette[(k+1) % palette.length], .7); }, Z_BAS);
     }
-    if(t.deco.indexOf("paillettes") >= 0){
-      h += semer(7, function(x,y,i){ return etincelle(x, y, alea(9,18), i % 3 === 0 ? "#F5C518" : pail, .75); });
+    if(t.deco.indexOf("pastilles") >= 0){
+      // trois pastilles discrètes en périphérie, une par couleur
+      var pc = ["#2FA0A0","#F5C518","#E9556A"];
+      h += semer(3, function(x,y,k){ return mPastille(x, y, alea(6,10), pc[k % 3], .8); }, Z_COTES.concat(Z_BAS));
     }
-    if(t.deco.indexOf("cercles") >= 0){
-      h += semer(8, function(x,y,i){ return mPastille(x, y, alea(6,15), i % 2 ? t.bouton : t.accent, alea(.3,.55).toFixed(2)); });
-    }
-    if(t.deco.indexOf("anneaux") >= 0){
-      h += semer(6, function(x,y,i){ return mAnneau(x, y, alea(10,24), i % 2 ? t.accent : t.sur, .35); });
-    }
-    if(t.deco.indexOf("croix") >= 0){
-      h += semer(5, function(x,y){ return mCroix(x, y, alea(8,13), t.accent, .55); });
-    }
-    if(t.deco.indexOf("points") >= 0){
-      h += semer(9, function(x,y){ return mPastille(x, y, alea(3,5), t.sur, .4); });
+    if(t.deco.indexOf("pastilles-sombres") >= 0){
+      h += semer(3, function(x,y){ return mPastille(x, y, alea(5,9), t.sur, .45); }, Z_HAUT.concat(Z_COTES));
+      h += etincelle(alea(8,14), alea(50,60), 14, "#F5C518", .9);
     }
     if(t.deco.indexOf("bulles") >= 0){
-      h += semer(7, function(x,y,i){
-        return i % 3 === 2 ? mAnneau(x, y, alea(9,16), t.accent, .4)
-                           : mPastille(x, y, alea(6,13), t.accent, alea(.3,.5).toFixed(2));
+      // quelques ronds vert d'eau, un anneau parmi eux
+      h += semer(4, function(x,y,k){
+        return k === 2 ? mAnneau(x, y, alea(11,16), t.accent, .45)
+                       : mPastille(x, y, alea(6,12), t.accent, alea(.35,.55).toFixed(2));
       });
     }
-    if(t.deco.indexOf("etincelles") >= 0){
-      h += semer(7, function(x,y){ return etincelle(x, y, alea(10,20), "#F5C518", .85); });
+    if(t.deco.indexOf("paillettes-or") >= 0){
+      h += semer(5, function(x,y){ return etincelle(x, y, alea(10,19), "#F5C518", .85); }, Z_HAUT.concat(Z_COTES));
+    }
+    if(t.deco.indexOf("tirets-tap") >= 0){
+      // deux tirets dorés qui encadrent le bouton
+      h += '<span class="conf" style="left:19%;top:'+alea(74,78).toFixed(1)+'%;width:12px;height:3.5px;background:#F5C518;transform:rotate(40deg);opacity:.85"></span>' +
+           '<span class="conf" style="right:19%;top:'+alea(74,78).toFixed(1)+'%;width:12px;height:3.5px;background:#F5C518;transform:rotate(-40deg);opacity:.85"></span>';
     }
     if(t.deco.indexOf("etoiles") >= 0){
-      h += semer(8, function(x,y,i){ return etincelle(x, y, alea(8,15), i % 4 === 3 ? "#F5C518" : "#C4B5FD", .8); });
-      h += '<svg style="right:14%;top:12%;width:26px;height:26px" viewBox="0 0 24 24">' +
+      h += semer(6, function(x,y,k){ return etincelle(x, y, alea(8,15), k % 3 === 2 ? "#F5C518" : "#C4B5FD", .8); }, Z_HAUT.concat(Z_COTES));
+      h += semer(2, function(x,y){ return mPastille(x, y, 3, "#C4B5FD", .5); }, Z_BAS);
+    }
+    if(t.deco.indexOf("lune") >= 0){
+      h += '<svg style="right:13%;top:12%;width:28px;height:28px" viewBox="0 0 24 24">' +
            '<path d="M20 15.5A8.5 8.5 0 0 1 9.2 4.2a8.5 8.5 0 1 0 10.8 11.3z" fill="#F5C518" opacity=".9"/></svg>';
     }
     /* ---- grands éléments structurants, à position fixe ---- */
-    if(t.deco.indexOf("pois") >= 0){
-      h += '<span class="pois" style="left:-16px;bottom:6%;color:'+t.sur+'"></span>' +
-           '<span class="pois" style="right:-24px;top:26%;color:'+t.sur+';opacity:.35"></span>';
+    if(t.deco.indexOf("pois") >= 0){        // trame de points, coin bas gauche
+      h += '<span class="pois" style="left:-16px;bottom:5%;color:'+t.sur+';opacity:.5"></span>';
+    }
+    if(t.deco.indexOf("pois-droit") >= 0){  // trame rosée, coin bas droit
+      h += '<span class="pois" style="right:-18px;bottom:9%;color:#E9556A;opacity:.55"></span>';
     }
     if(t.deco.indexOf("poussiere") >= 0){
       h += '<span class="pois" style="left:6%;bottom:4%;color:#F5C518;opacity:.75;width:110px;height:90px;background-size:11px 11px"></span>';
     }
-    if(t.deco.indexOf("vague") >= 0){
+    if(t.deco.indexOf("vague") >= 0){       // bandeau vert d'eau derrière le chrono
       h += '<svg style="left:0;top:38%;width:100%;height:130px" viewBox="0 0 400 130" preserveAspectRatio="none">' +
-           '<path d="M0 46c62-34 118 26 190 10s148-46 210-8v96H0z" fill="'+(t.id==="onyx"?"#0A0A0A":"#CFE6DC")+'" opacity="'+(t.id==="onyx"?".9":".75")+'"/></svg>';
+           '<path d="M0 46c62-34 118 26 190 10s148-46 210-8v96H0z" fill="#CFE6DC" opacity=".75"/></svg>';
+    }
+    if(t.deco.indexOf("vague-basse") >= 0){ // le bas du cadre plonge dans un noir plus profond
+      h += '<svg style="left:0;top:62%;width:100%;height:40%" viewBox="0 0 400 160" preserveAspectRatio="none">' +
+           '<path d="M0 60c70-40 150 30 230 10s120-50 170-24v114H0z" fill="#0A0A0A" opacity=".95"/></svg>';
     }
     if(t.deco.indexOf("gros-halo") >= 0){
       h += '<span class="halo" style="left:50%;top:46%;width:min(84vw,340px);height:min(84vw,340px);transform:translate(-50%,-50%);background:#F6DAD9;opacity:.7"></span>';
     }
-    if(t.deco.indexOf("trait") >= 0){
-      h += '<svg style="left:50%;top:60%;width:min(56vw,220px);height:26px;transform:translateX(-50%)" viewBox="0 0 220 26">' +
+    if(t.deco.indexOf("halo-tap") >= 0){    // grand rond doux derrière le bouton
+      h += '<span class="halo" style="left:50%;bottom:1%;width:min(64vw,250px);height:min(64vw,250px);transform:translateX(-50%);background:#F6D9D4;opacity:.85"></span>';
+    }
+    if(t.deco.indexOf("trait") >= 0){       // souligné du chrono
+      h += '<svg style="left:50%;top:52%;width:min(56vw,220px);height:26px;transform:translateX(-50%)" viewBox="0 0 220 26">' +
            '<path d="M8 20C60 4 160 4 212 18" stroke="'+t.accent+'" stroke-width="7" stroke-linecap="round" fill="none"/></svg>';
     }
     els.deco.innerHTML = h;
