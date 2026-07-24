@@ -242,6 +242,21 @@ body{
 .jauge-niv span{display:block;height:100%;width:0;border-radius:99px;
   background:var(--ui-vert);transition:width .7s cubic-bezier(.2,.85,.3,1);}
 .jauge-niv.plein span{background:#E8A400;}
+/* mini-classement du duel : qui est devant, d'un coup d'œil, entre deux manches */
+.duel-cl{display:none;flex-direction:column;gap:3px;width:min(78%,270px);flex:0 0 auto;}
+.duel-cl.on{display:flex;}
+.dc-l{display:flex;align-items:center;gap:6px;font-size:9.5px;font-weight:900;letter-spacing:.04em;}
+.dc-l .pion{width:9px;height:9px;border-radius:50%;flex:0 0 auto;}
+.dc-l .nm{width:64px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:left;opacity:.75;}
+.dc-l.tete .nm{opacity:1;}
+.dc-l .barre{flex:1;height:7px;border-radius:99px;background:rgba(var(--sur-rgb),.14);overflow:hidden;}
+.dc-l .barre span{display:block;height:100%;border-radius:99px;width:0;
+  transition:width .7s cubic-bezier(.2,.85,.3,1);}
+.dc-l .pts{min-width:36px;text-align:right;font-size:9px;opacity:.85;}
+.carte-cl{width:100%;margin-top:13px;padding-top:12px;border-top:2px solid rgba(var(--sur-rgb),.16);gap:5px;}
+.carte-cl .dc-l{font-size:11px;}
+.carte-cl .nm{width:96px;}
+.carte-cl .pts{font-size:10.5px;min-width:42px;}
 .fb-j{width:100%;margin-top:12px;height:12px;background:rgba(var(--sur-rgb),.14);}
 .infos{position:relative;z-index:8;background:none;cursor:pointer;color:var(--sur);
   font-family:inherit;font-size:11px;font-weight:900;letter-spacing:.11em;
@@ -436,6 +451,7 @@ body{
     <div class="fen-boite">
       <div class="carte-niv" id="carte-niv">NIVEAU 01</div>
       <div class="carte-chips" id="carte-chips"></div>
+      <div class="duel-cl carte-cl" id="carte-cl"></div>
       <div class="carte-obj" id="carte-obj">
         <div class="carte-obj-l">OBJECTIF</div>
         <div class="carte-obj-v" id="carte-obj-v">5 s</div>
@@ -469,6 +485,7 @@ body{
       <button class="tap" id="tap">TAP</button>
     </div>
     <div class="jauge-niv" id="jauge-niv"><span id="jauge-remp"></span></div>
+    <div class="duel-cl" id="duel-cl"></div>
     <button class="infos" id="infos">MANCHE 01 · FACILE · ±520 MS</button>
   </div>
 
@@ -1142,6 +1159,10 @@ window.addEventListener("error", function(ev){
     var tObj, neuf = {}, titre, chips;
     {
       els.carte.classList.remove("nu");
+      // entre deux manches de duel, la carte montre qui est devant
+      var carteCl = $("carte-cl");
+      carteCl.classList.toggle("on", MODE === "duel");
+      if(MODE === "duel") remplirClassement(carteCl);
       if(MODE === "duel"){
         var j = duel.joueurs[duel.tour];
         titre = "À " + j.nom.toUpperCase();
@@ -1241,6 +1262,35 @@ window.addEventListener("error", function(ev){
       // en texte sur fond sombre, la couleur du joueur s'éclaircit pour rester lisible
       els.cadre.style.setProperty("--accent", fonce ? eclaircir(j.couleur, 0.42) : j.couleur);
     }
+    majDuelClassement();
+  }
+  /* le mini-classement du duel : les barres se remplissent par rapport
+     au meneur, la couronne marque qui est devant */
+  function remplirClassement(el){
+    var cl = duel.joueurs.slice().sort(function(a, b){ return b.score - a.score; });
+    var max = Math.max(1, cl[0].score);
+    el.innerHTML = cl.map(function(j, i){
+      var meneur = i === 0 && j.score > 0 && (cl.length < 2 || j.score > cl[1].score);
+      return '<div class="dc-l' + (meneur ? " tete" : "") + '">' +
+             '<span class="pion" style="background:' + j.couleur + '"></span>' +
+             '<span class="nm">' + (meneur ? "👑 " : "") + j.nom + '</span>' +
+             '<span class="barre"><span style="background:' + j.couleur + '"></span></span>' +
+             '<span class="pts">' + milliers(j.score) + '</span></div>';
+    }).join("");
+    // la largeur arrive après le rendu : les barres montent sous les yeux
+    requestAnimationFrame(function(){
+      var barres = el.querySelectorAll(".barre span");
+      cl.forEach(function(j, i){
+        if(barres[i]) barres[i].style.width = Math.round(100 * j.score / max) + "%";
+      });
+    });
+  }
+  function majDuelClassement(){
+    var el = $("duel-cl");
+    var on = MODE === "duel" && duel.joueurs.length > 0 && jeu.phase !== "fini";
+    el.classList.toggle("on", on);
+    if(!on){ el.innerHTML = ""; return; }
+    remplirClassement(el);
   }
 
   function objectifVisible(e){
@@ -1627,6 +1677,7 @@ window.addEventListener("error", function(ev){
     jeu.phase = "fini";
     els.carte.classList.remove("on"); fermerBilan();
     els.tap.classList.remove("attente");
+    majDuelClassement();
     succes("duel");
     var cl = duel.joueurs.slice().sort(function(a, b){ return b.score - a.score; });
     els.clTitre.textContent = cl.length > 1 && cl[0].score === cl[1].score
