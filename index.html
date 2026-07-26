@@ -121,11 +121,15 @@ body{
 @keyframes pop{0%{transform:scale(.6);opacity:0}60%{transform:scale(1.09)}100%{transform:scale(1);opacity:1}}
 /* ouverture de manche : l'objectif s'impose en grand, puis le chrono arrive dessous */
 .tete-obj{display:flex;flex-direction:column;align-items:center;gap:2px;}
+/* l'ouverture se joue sur le rythme (l'objectif, puis le chrono), pas sur
+   la géométrie : rien ne se déplace ni ne change de taille */
 .coeur.intro .tete-obj{animation:fondu .38s ease-out both;}
-.coeur.intro .zone-chrono{animation:apparC .44s cubic-bezier(.2,1.2,.4,1) .2s both;}
-@keyframes fondu{0%{opacity:0;transform:translateY(-10px);}100%{opacity:1;transform:none;}}
-@keyframes apparC{0%{opacity:0;transform:translateY(26px) scale(.88);}100%{opacity:1;transform:none;}}
-.tap.attente{opacity:.38;transform:scale(.93);box-shadow:0 4px 0 var(--boutonB);}
+.coeur.intro .zone-chrono{animation:apparC .44s ease-out .2s both;}
+@keyframes fondu{0%{opacity:0;}100%{opacity:1;}}
+@keyframes apparC{0%{opacity:0;}100%{opacity:1;}}
+/* en attente, le bouton s'estompe mais ne bouge pas d'un pixel :
+   ni taille, ni ombre, ni position — sinon il « respire » à chaque fenêtre */
+.tap.attente{opacity:.38;}
 
 /* pictogrammes et badges d'alerte de début de manche */
 .pic{display:inline-block;vertical-align:-2px;flex:0 0 auto;width:14px;height:14px;}
