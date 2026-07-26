@@ -248,7 +248,9 @@ body{
                   100%{transform:translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) rotate(var(--rot)) scale(.45);opacity:0;}}
 
 /* ---------- bouton ---------- */
-.bas{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:14px;}
+/* le bloc du bas décolle du bord : le TAP tombe mieux sous le pouce */
+.bas{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:14px;
+  margin-bottom:clamp(14px,5vh,42px);}
 .enveloppe{position:relative;display:flex;align-items:center;justify-content:center;}
 .anneau{position:absolute;width:158px;height:158px;border-radius:50%;border:2px solid var(--bouton);opacity:.35;}
 /* second anneau concentrique, plus discret : l'effet "cible" des thèmes sombres */
@@ -428,7 +430,7 @@ body{
   .alerte{font-size:9px;padding:4px 9px;}
   .tap{width:106px;height:106px;font-size:22px;}
   .anneau{width:134px;height:134px;} .lueur{width:160px;height:160px;}
-  .bas{gap:9px;} .score{font-size:21px;}
+  .bas{gap:9px;margin-bottom:10px;} .score{font-size:21px;}
   .bilan{height:26px;} .bilan .et{font-size:19px;}
   .carte-niv{font-size:23px;} .chip{font-size:9px;padding:4px 8px;}
   .fen-boite{padding:16px 18px 16px;} .carte-obj{margin-top:11px;padding-top:10px;}
