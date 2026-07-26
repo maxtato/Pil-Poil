@@ -254,7 +254,9 @@ body{
 /* ---------- bouton ---------- */
 /* la jauge et la ligne de résumé restent au ras du bord ; c'est le bouton
    qui remonte, en creusant l'écart avec eux */
-.bas{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:14px;}
+/* le bloc du bas passe devant le décor : sans position ni z-index, la jauge
+   et le classement se peignaient sous les grandes formes du fond */
+.bas{position:relative;z-index:6;flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:14px;}
 .enveloppe{position:relative;display:flex;align-items:center;justify-content:center;
   margin-bottom:clamp(6px,4.5vh,36px);}
 .anneau{position:absolute;width:158px;height:158px;border-radius:50%;border:2px solid var(--bouton);opacity:.35;}
