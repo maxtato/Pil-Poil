@@ -126,6 +126,23 @@ body{
 @keyframes apparC{0%{opacity:0;transform:translateY(26px) scale(.88);}100%{opacity:1;transform:none;}}
 .tap.attente{opacity:.38;transform:scale(.93);box-shadow:0 4px 0 var(--boutonB);}
 
+/* pictogrammes et badges d'alerte de début de manche */
+.pic{display:inline-block;vertical-align:-2px;flex:0 0 auto;width:14px;height:14px;}
+.lt{display:inline-flex;align-items:center;gap:7px;}
+.vies{display:inline-flex;gap:2px;align-items:center;}
+.alertes{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:7px;
+  max-width:88%;}
+.alerte{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border-radius:99px;
+  font-size:9.5px;font-weight:900;letter-spacing:.09em;white-space:nowrap;
+  border:1.5px solid var(--moyen);color:var(--moyen);
+  background:rgba(var(--sur-rgb),.05);
+  opacity:0;animation:alerteIn .45s cubic-bezier(.2,1.4,.4,1) forwards;}
+.alerte:nth-child(1){animation-delay:.06s}
+.alerte:nth-child(2){animation-delay:.16s}
+.alerte:nth-child(3){animation-delay:.26s}
+.alerte:nth-child(4){animation-delay:.36s}
+@keyframes alerteIn{0%{opacity:0;transform:scale(.55);}70%{transform:scale(1.09);}100%{opacity:1;transform:scale(1);}}
+
 /* fenêtres modales : voile sombre + encart opaque (ouverture et bilan) */
 .fenetre{position:absolute;inset:0;z-index:7;display:none;align-items:center;justify-content:center;
   background:rgba(20,17,12,.42);padding:18px;}
@@ -423,7 +440,7 @@ body{
   .gain.go,.part,.pilule.on,.coeur.secousse,#cadre.eclair,.onde.go,
   .coeur.intro .tete-obj,.coeur.intro .zone-chrono,.toast.on,
   .limg.presse,#cadre.accueil .limg,
-  .voile.on,.feuille.on,.feuille.on > *,
+  .voile.on,.feuille.on,.feuille.on > *,.alerte,
   .fen-boite,.chip,.carte-obj,.fen-et .et,.fen-pil{animation:none;opacity:1;}
   .gain.go{opacity:1;}
 }
@@ -473,6 +490,7 @@ body{
       <div class="obj-l" id="obj-l">OBJECTIF</div>
       <div class="obj-v" id="obj-v">10.00 s</div>
     </div>
+    <div class="alertes" id="alertes"></div>
     <div class="pilule" id="pilule"></div>
     <div class="zone-chrono">
       <div class="chrono" id="chrono">00.00</div>
@@ -529,10 +547,10 @@ body{
 
   <div class="feuille" id="f-modes">
     <h2>Mode de jeu</h2>
-    <button class="ligne" data-mode="campagne"><span>🏁 CAMPAGNE <span class="e">difficulté croissante</span></span><span class="fl">›</span></button>
-    <button class="ligne" data-mode="survie"><span>🛡️ SURVIE <span class="e">3 vies, sans plafond</span></span><span class="fl">›</span></button>
-    <button class="ligne" data-mode="entrainement"><span>🎯 ENTRAÎNEMENT <span class="e">cible au choix, sans fin</span></span><span class="fl">›</span></button>
-    <button class="ligne" data-mode="duel"><span>⚔️ DUEL <span class="e">à plusieurs, chacun son tour</span></span><span class="fl">›</span></button>
+    <button class="ligne" data-mode="campagne"><span><span class="lt"><svg class="pic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 3h2.2v18H6z"/><path d="M8.2 5h10.6l-2.8 4 2.8 4H8.2z"/></svg>CAMPAGNE</span><span class="e">difficulté croissante</span></span><span class="fl">›</span></button>
+    <button class="ligne" data-mode="survie"><span><span class="lt"><svg class="pic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l8 3v6c0 4.8-3.2 8.4-8 11-4.8-2.6-8-6.2-8-11V5z"/></svg>SURVIE</span><span class="e">3 vies, sans plafond</span></span><span class="fl">›</span></button>
+    <button class="ligne" data-mode="entrainement"><span><span class="lt"><svg class="pic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zm0 2.6a6.4 6.4 0 1 1 0 12.8 6.4 6.4 0 0 1 0-12.8z"/><circle cx="12" cy="12" r="3"/></svg>ENTRAÎNEMENT</span><span class="e">cible au choix, sans fin</span></span><span class="fl">›</span></button>
+    <button class="ligne" data-mode="duel"><span><span class="lt"><svg class="pic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 3h2.6L16 13.4l-1.8 1.8L3 4.6zM21 3h-2.6L8 13.4l1.8 1.8L21 4.6z"/><path d="M5.4 16.2l2.4 2.4M4 21l3.2-3.2M18.6 16.2l-2.4 2.4M20 21l-3.2-3.2" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" fill="none"/></svg>DUEL</span><span class="e">à plusieurs, chacun son tour</span></span><span class="fl">›</span></button>
     <button class="ligne or" id="modes-fermer" data-fermer="1"><span>Fermer</span><span class="e">✕</span></button>
   </div>
 
@@ -556,7 +574,7 @@ body{
   <div class="feuille" id="f-survie">
     <h2>Survie</h2>
     <p style="font-size:12.5px;font-weight:800;opacity:.55;margin:-4px 0 2px">La difficulté monte à chaque manche réussie, sans plafond. Trois vies : un raté en coûte une. Les excellents enchaînés rapportent un bonus de série.</p>
-    <div class="srow"><span class="ico">🏆</span><div class="tx"><div class="nm" id="sv-record">Aucun record</div><div class="ds">survis le plus longtemps possible</div></div></div>
+    <div class="srow"><span class="ico"><svg class="pic" style="width:16px;height:16px" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 3h10v3h4c-.4 3.6-2.6 5.8-5.4 6.4A5.5 5.5 0 0 1 13 15v2.5h3.5V21h-9v-3.5H11V15a5.5 5.5 0 0 1-2.6-2.6C5.6 11.8 3.4 9.6 3 6h4zM5.3 8c.4 1.4 1.3 2.4 2.5 2.9L7.4 8zm13.4 0h-2.1l-.4 2.9c1.2-.5 2.1-1.5 2.5-2.9z"/></svg></span><div class="tx"><div class="nm" id="sv-record">Aucun record</div><div class="ds">survis le plus longtemps possible</div></div></div>
     <button class="ligne vert" id="sv-go"><span>Commencer</span><span class="fl">›</span></button>
     <button class="ligne or" data-fermer="1"><span>Retour</span><span class="e">✕</span></button>
   </div>
@@ -673,16 +691,16 @@ window.addEventListener("error", function(ev){
   /* succès : des jalons à débloquer, tous modes confondus.
      Ils vivent dans la sauvegarde sous la clé _succes. */
   var SUCCES = [
-    {id:"premier",   ico:"🎯", nom:"PREMIER PAS",     desc:"réussir un tap dans la fenêtre"},
-    {id:"pilepoil",  ico:"⭐", nom:"PILE POIL",       desc:"tomber à 30 ms ou moins"},
-    {id:"zero",      ico:"💫", nom:"MILLIMÉTRÉ",      desc:"un écart de 0 ms, exactement"},
-    {id:"serie5",    ico:"🔥", nom:"EN FUSION",       desc:"série de 5 excellents d'affilée"},
-    {id:"sansfaute", ico:"🌟", nom:"SANS-FAUTE",      desc:"toutes les étoiles d'une manche à plusieurs taps"},
-    {id:"niveau8",   ico:"🕶️", nom:"LES YEUX FERMÉS", desc:"réussir le niveau 8 en campagne"},
-    {id:"boucle",    ico:"🏁", nom:"MARATHONIEN",     desc:"boucler une campagne"},
-    {id:"survie10",  ico:"🛡️", nom:"SURVIVANT",       desc:"atteindre la manche 10 en survie"},
-    {id:"duel",      ico:"🤝", nom:"BON PUBLIC",      desc:"aller au bout d'un duel"},
-    {id:"entr50",    ico:"💪", nom:"ASSIDU",          desc:"cumuler 50 essais d'entraînement"}
+    {id:"premier",   ico:"tap",      nom:"PREMIER PAS",     desc:"réussir un tap dans la fenêtre"},
+    {id:"pilepoil",  ico:"etoile",   nom:"PILE POIL",       desc:"tomber à 30 ms ou moins"},
+    {id:"zero",      ico:"cible",    nom:"MILLIMÉTRÉ",      desc:"un écart de 0 ms, exactement"},
+    {id:"serie5",    ico:"eclair",   nom:"EN FUSION",       desc:"série de 5 excellents d'affilée"},
+    {id:"sansfaute", ico:"losange",  nom:"SANS-FAUTE",      desc:"toutes les étoiles d'une manche à plusieurs taps"},
+    {id:"niveau8",   ico:"oeil",     nom:"LES YEUX FERMÉS", desc:"réussir le niveau 8 en campagne"},
+    {id:"boucle",    ico:"drapeau",  nom:"MARATHONIEN",     desc:"boucler une campagne"},
+    {id:"survie10",  ico:"bouclier", nom:"SURVIVANT",       desc:"atteindre la manche 10 en survie"},
+    {id:"duel",      ico:"epees",    nom:"BON PUBLIC",      desc:"aller au bout d'un duel"},
+    {id:"entr50",    ico:"haltere",  nom:"ASSIDU",          desc:"cumuler 50 essais d'entraînement"}
   ];
 
   var $ = function(id){ return document.getElementById(id); };
@@ -731,7 +749,38 @@ window.addEventListener("error", function(ev){
   /* ================== outils ================== */
   function fmt(n){ return (n < 10 ? "0" : "") + n.toFixed(2); }
   function milliers(n){ return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, " "); }
-  function coeurs(n){ var s = "", i; for(i = 0; i < 3; i++) s += i < n ? "♥" : "♡"; return s; }
+
+  /* ---- pictogrammes maison : pas d'emoji, des symboles dessinés ---- */
+  var PICTOS = {
+    drapeau:  '<path d="M6 3h2.2v18H6z"/><path d="M8.2 5h10.6l-2.8 4 2.8 4H8.2z"/>',
+    bouclier: '<path d="M12 2l8 3v6c0 4.8-3.2 8.4-8 11-4.8-2.6-8-6.2-8-11V5z"/>',
+    cible:    '<path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zm0 2.6a6.4 6.4 0 1 1 0 12.8 6.4 6.4 0 0 1 0-12.8z"/><circle cx="12" cy="12" r="3"/>',
+    epees:    '<path d="M3 3h2.6L16 13.4l-1.8 1.8L3 4.6zM21 3h-2.6L8 13.4l1.8 1.8L21 4.6z"/>' +
+              '<path d="M5.4 16.2l2.4 2.4M4 21l3.2-3.2M18.6 16.2l-2.4 2.4M20 21l-3.2-3.2" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" fill="none"/>',
+    couronne: '<path d="M3.5 7.5L8 11l4-6 4 6 4.5-3.5L19 18H5z"/>',
+    trophee:  '<path d="M7 3h10v3h4c-.4 3.6-2.6 5.8-5.4 6.4A5.5 5.5 0 0 1 13 15v2.5h3.5V21h-9v-3.5H11V15a5.5 5.5 0 0 1-2.6-2.6C5.6 11.8 3.4 9.6 3 6h4zM5.3 8c.4 1.4 1.3 2.4 2.5 2.9L7.4 8zm13.4 0h-2.1l-.4 2.9c1.2-.5 2.1-1.5 2.5-2.9z"/>',
+    etoile:   '<path d="M12 2.5l2.8 6 6.6.7-4.9 4.4 1.4 6.5L12 16.8l-5.9 3.3 1.4-6.5-4.9-4.4 6.6-.7z"/>',
+    eclair:   '<path d="M13 2L4.5 13.5H10L8.5 22 17 10.5h-5.5z"/>',
+    losange:  '<path d="M12 2.2L20 12l-8 9.8L4 12z"/>',
+    oeil:     '<path d="M12 6.5c4.8 0 8.3 3.6 9.6 5.5-1.3 1.9-4.8 5.5-9.6 5.5S3.7 13.9 2.4 12C3.7 10.1 7.2 6.5 12 6.5zm0 2.3a3.2 3.2 0 1 0 0 6.4 3.2 3.2 0 0 0 0-6.4z"/>' +
+              '<path d="M4.6 20L19.4 4.4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" fill="none"/>',
+    haltere:  '<path d="M2.5 9.8h1.8v4.4H2.5zM19.7 9.8h1.8v4.4h-1.8zM5.5 7.4h2.6v9.2H5.5zM15.9 7.4h2.6v9.2h-2.6zM8.6 10.6h6.8v2.8H8.6z"/>',
+    tap:      '<path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zm0 2.4a6.6 6.6 0 1 1 0 13.2A6.6 6.6 0 0 1 12 5.4z"/><circle cx="12" cy="12" r="4"/>',
+    chrono:   '<circle cx="12" cy="13.4" r="7.6" fill="none" stroke="currentColor" stroke-width="2.4"/>' +
+              '<path d="M12 9.6v3.8l2.8 1.9M9.4 2.4h5.2" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" fill="none"/>',
+    surprise: '<path d="M12 2.6a6 6 0 0 1 6 6c0 2.6-1.6 3.9-2.9 4.9-1 .8-1.6 1.3-1.6 2.5h-3c0-2.6 1.4-3.7 2.7-4.7 1-.8 1.8-1.4 1.8-2.7a3 3 0 0 0-6 0h-3a6 6 0 0 1 6-6z"/><circle cx="12" cy="20" r="1.8"/>',
+    coeur:    '<path d="M12 20.6C7 16.9 3.4 13.6 3.4 9.9a4.5 4.5 0 0 1 8.6-1.8 4.5 4.5 0 0 1 8.6 1.8c0 3.7-3.6 7-8.6 10.7z"/>',
+    coeurVide:'<path d="M12 20.6C7 16.9 3.4 13.6 3.4 9.9a4.5 4.5 0 0 1 8.6-1.8 4.5 4.5 0 0 1 8.6 1.8c0 3.7-3.6 7-8.6 10.7z" fill="none" stroke="currentColor" stroke-width="2"/>'
+  };
+  function picto(nom, taille){
+    taille = taille || 14;
+    return '<svg class="pic" style="width:' + taille + 'px;height:' + taille + 'px" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' + (PICTOS[nom] || "") + '</svg>';
+  }
+  function coeursHtml(n){
+    var s = "", i;
+    for(i = 0; i < 3; i++) s += picto(i < n ? "coeur" : "coeurVide", 12);
+    return '<span class="vies">' + s + '</span>';
+  }
   function vibrer(p){ if(vib){ try{ if(navigator.vibrate) navigator.vibrate(p); }catch(e){} } }
   var ctx = null;
   function bip(f,d,v,type){
@@ -755,14 +804,10 @@ window.addEventListener("error", function(ev){
 
   /* ================== toasts & succès ================== */
   var fileToasts = [], toastEnCours = false;
-  function montrerToast(txt){
-    fileToasts.push(txt);
-    if(!toastEnCours) prochainToast();
-  }
   function prochainToast(){
     if(!fileToasts.length){ toastEnCours = false; return; }
     toastEnCours = true;
-    els.toast.textContent = fileToasts.shift();
+    els.toast.innerHTML = fileToasts.shift();
     els.toast.classList.remove("on"); void els.toast.offsetWidth; els.toast.classList.add("on");
     // minuterie brute : un toast doit survivre à annulerPlan()
     setTimeout(function(){
@@ -777,7 +822,8 @@ window.addEventListener("error", function(ev){
     var s = null;
     SUCCES.forEach(function(x){ if(x.id === id) s = x; });
     if(s){
-      montrerToast("SUCCÈS · " + s.ico + " " + s.nom);
+      fileToasts.push(picto(s.ico, 13) + " SUCCÈS · " + s.nom);
+      if(!toastEnCours) prochainToast();
       bip(1320, .14, .06, "triangle"); vibrer([10,40,10]);
     }
   }
@@ -785,7 +831,7 @@ window.addEventListener("error", function(ev){
     var deb = progres._succes || {}, n = 0, h = "";
     SUCCES.forEach(function(s){
       var ok = !!deb[s.id]; if(ok) n++;
-      h += '<div class="srow' + (ok ? '' : ' verrou') + '"><span class="ico">' + s.ico + '</span>' +
+      h += '<div class="srow' + (ok ? '' : ' verrou') + '"><span class="ico">' + picto(s.ico, 16) + '</span>' +
            '<div class="tx"><div class="nm">' + s.nom + '</div><div class="ds">' + s.desc + '</div></div>' +
            (ok ? '<span class="coche">✓</span>' : '') + '</div>';
     });
@@ -1118,7 +1164,7 @@ window.addEventListener("error", function(ev){
     jeu.phase = "pret"; jeu.cfg = faireCfg();
     jeu.marque = 0; jeu.gagnesManche = 0; jeu.revele = false;
     jeu.etoilesManche = []; jeu.ecartsManche = []; jeu.tempsManche = [];
-    themeSuivant(); habillerMode(); majJauge();
+    themeSuivant(); habillerMode(); majJauge(); majAlertes();
     els.pilule.classList.remove("on");
     els.objV.style.display = "";
     els.chrono.textContent = "00.00";
@@ -1135,7 +1181,7 @@ window.addEventListener("error", function(ev){
                               " · NIVEAU " + duel.niveauManche;
     } else if(MODE === "survie"){
       els.infos.textContent = "SURVIE · MANCHE " + (survie.manche < 10 ? "0" : "") + survie.manche +
-                              " · " + coeurs(survie.vies) +
+                              " · " + survie.vies + (survie.vies > 1 ? " VIES" : " VIE") +
                               (jeu.serie >= 2 ? " · SÉRIE ×" + jeu.serie : "");
     } else {
       els.infos.textContent = "NIVEAU " + (jeu.niveau < 10 ? "0" : "") + jeu.niveau +
@@ -1212,7 +1258,7 @@ window.addEventListener("error", function(ev){
         titre = "MANCHE " + (survie.manche < 10 ? "0" : "") + survie.manche;
         els.carteNiv.style.color = "";
         chips = chipsNiveau(survie.niveau);
-        chips.unshift({t:coeurs(survie.vies), cle:"vies"});
+        chips.unshift({t:coeursHtml(survie.vies), cle:"vies"});
         chips.push({t:"NIVEAU " + survie.niveau, cle:"niv"});
         tObj = survie.manche === 1 ? 1000 : 700;
       } else {
@@ -1258,6 +1304,7 @@ window.addEventListener("error", function(ev){
     els.tap.classList.remove("attente");
     jeu.phase = "pret";
     jeu.verrou = performance.now() + 300;
+    majAlertes();                       // les pièges rejaillissent sous les yeux
     bip(870, .12, .05, "triangle");
   }
   function fermerBilan(){
@@ -1311,7 +1358,7 @@ window.addEventListener("error", function(ev){
       var meneur = i === 0 && j.score > 0 && (cl.length < 2 || j.score > cl[1].score);
       return '<div class="dc-l' + (meneur ? " tete" : "") + '">' +
              '<span class="pion" style="background:' + j.couleur + '"></span>' +
-             '<span class="nm">' + (meneur ? "👑 " : "") + j.nom + '</span>' +
+             '<span class="nm">' + (meneur ? picto("couronne", 11) + " " : "") + j.nom + '</span>' +
              '<span class="barre"><span style="background:' + j.couleur + '"></span></span>' +
              '<span class="pts">' + milliers(j.score) + '</span></div>';
     }).join("");
@@ -1329,6 +1376,24 @@ window.addEventListener("error", function(ev){
     el.classList.toggle("on", on);
     if(!on){ el.innerHTML = ""; return; }
     remplirClassement(el);
+  }
+
+  /* Les pièges de la manche, annoncés clairement au-dessus du chrono :
+     taps enchaînés, chrono qui s'efface, aveugle, cible surprise, précision.
+     Les badges rejaillissent quand la manche commence, pour qu'on ne les rate pas. */
+  function majAlertes(){
+    var el = $("alertes"), cfg = jeu.cfg, p = [], i;
+    if(cfg && jeu.phase !== "fini"){
+      if(cfg.taps > 1) p.push(picto("tap", 11) + cfg.taps + " TAPS ENCHAÎNÉS");
+      if(cfg.coupeA === 0) p.push(picto("oeil", 11) + "À L'AVEUGLE");
+      else if(cfg.coupeA !== null) p.push(picto("chrono", 11) + "LE CHRONO S'EFFACE");
+      var surprise = false;
+      for(i = 0; i < cfg.reveles.length; i++) if(cfg.reveles[i] !== null) surprise = true;
+      if(surprise) p.push(picto("surprise", 11) + "CIBLE SURPRISE");
+      if(cfg.pas <= 0.01) p.push(picto("cible", 11) + "AU CENTIÈME");
+      else if(cfg.pas <= 0.1) p.push(picto("cible", 11) + "AU DIXIÈME");
+    }
+    el.innerHTML = p.map(function(t){ return '<span class="alerte">' + t + '</span>'; }).join("");
   }
 
   function objectifVisible(e){
@@ -1526,7 +1591,8 @@ window.addEventListener("error", function(ev){
     } else if(MODE === "duel"){
       extra = duel.joueurs[duel.tour].nom + "  ·  " + milliers(duel.joueurs[duel.tour].score) + " pts au total";
     } else if(MODE === "survie"){
-      extra = coeurs(survie.vies) + "  ·  manche " + survie.manche + "  ·  niveau " + survie.niveau +
+      extra = survie.vies + (survie.vies > 1 ? " vies" : " vie") +
+              "  ·  manche " + survie.manche + "  ·  niveau " + survie.niveau +
               (jeu.serie >= 2 ? "  ·  série ×" + jeu.serie : "");
       if(survie.vies <= 0){
         els.fbPil.textContent = "PLUS DE VIES";
@@ -1590,7 +1656,7 @@ window.addEventListener("error", function(ev){
     els.carte.classList.remove("on"); fermerBilan();
     els.coeur.classList.remove("intro"); els.tap.classList.remove("attente");
     jeu.phase = "fini"; jeu.fini = true;
-    themeSuivant();
+    themeSuivant(); majAlertes();
     if(victoire) succes("boucle");
     var p = progres[jeu.defi.id] || {score:0, niveau:0};
     var record = jeu.recordBattu && jeu.score > 0;
@@ -1658,7 +1724,7 @@ window.addEventListener("error", function(ev){
     els.carte.classList.remove("on"); fermerBilan();
     els.coeur.classList.remove("intro"); els.tap.classList.remove("attente");
     jeu.phase = "fini"; jeu.fini = true;
-    themeSuivant();
+    themeSuivant(); majAlertes();
     var r = progres._survie || {score:0, manche:0};
     var record = jeu.score > (r.score || 0);
     if(record) r.score = jeu.score;
