@@ -8,7 +8,7 @@ Le jeu tient dans un seul fichier : ouvre `index.html` dans un navigateur, sur m
 
 | Mode | Principe |
 |---|---|
-| **Campagne** | 16 niveaux à difficulté croissante : plusieurs taps enchaînés, chrono qui s'efface, cibles révélées au dernier moment… 4 défis de départ (Facile, Normal, Difficile, Wanda). |
+| **Campagne** | 16 niveaux à difficulté croissante : plusieurs taps enchaînés, chrono qui s'efface, cibles révélées au dernier moment… 4 défis de départ (Facile, Normal, Difficile, Extrême). |
 | **Survie** | 3 vies, la difficulté grimpe à chaque manche réussie, sans plafond : au-delà du niveau 16, la fenêtre de tolérance continue de fondre. Record sauvegardé. |
 | **Entraînement** | Une cible au choix (1 à 10 s), répétée sans fin, avec suivi de ta moyenne et de ton meilleur écart. |
 | **Duel** | 2 à 4 joueurs sur le même appareil, chacun son tour, mêmes règles pour tous. |

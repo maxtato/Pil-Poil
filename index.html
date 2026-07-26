@@ -622,7 +622,7 @@ window.addEventListener("error", function(ev){
     {id:"facile",    nom:"FACILE",    depart:1,  desc:"niv. 1 · 1 tap, chrono visible"},
     {id:"normal",    nom:"NORMAL",    depart:4,  desc:"niv. 4 · chrono qui s'efface"},
     {id:"difficile", nom:"DIFFICILE", depart:8,  desc:"niv. 8 · à l'aveugle"},
-    {id:"wanda",     nom:"WANDA",     depart:13, desc:"niv. 13 · dixièmes et centièmes"}
+    {id:"extreme",   nom:"EXTRÊME",   depart:13, desc:"niv. 13 · dixièmes et centièmes"}
   ];
 
   /* paliers de réussite, du plus serré au plus large.
@@ -778,7 +778,9 @@ window.addEventListener("error", function(ev){
             var o = JSON.parse(r.value);
             if(o && typeof o === "object"){
               if(typeof o._theme === "number" || o._theme === null){ themeChoisi = o._theme; }
-              delete o._theme; progres = o;
+              delete o._theme;
+              if(o.wanda && !o.extreme){ o.extreme = o.wanda; delete o.wanda; }  // ancien nom du défi
+              progres = o;
             }
           }
         }catch(e){}
