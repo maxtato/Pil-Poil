@@ -110,9 +110,10 @@ body{
 .coeur.secousse{animation:secousse .42s cubic-bezier(.36,.07,.19,.97);}
 @keyframes secousse{10%,90%{transform:translateX(-4px)}20%,80%{transform:translateX(7px)}
                     30%,50%,70%{transform:translateX(-10px)}40%,60%{transform:translateX(10px)}}
-.obj-l{font-size:12px;font-weight:900;letter-spacing:.15em;opacity:.6;height:16px;white-space:nowrap;}
-.obj-v{font-size:clamp(19px,6vw,24px);font-weight:900;color:var(--accent);letter-spacing:-.01em;
-  transition:color .35s ease;height:1.2em;}
+.obj-l{font-size:12.5px;font-weight:900;letter-spacing:.15em;opacity:.55;height:17px;white-space:nowrap;}
+/* l'objectif est la consigne de la manche : il doit peser face au chrono */
+.obj-v{font-size:clamp(32px,10vw,42px);font-weight:900;color:var(--accent);letter-spacing:-.03em;
+  line-height:1.1;transition:color .35s ease;height:1.15em;margin-top:1px;}
 .obj-v.mystere{opacity:.35;}
 .pilule{display:none;align-items:center;height:34px;padding:0 18px;border-radius:99px;
   color:#fff;font-size:16px;font-weight:900;letter-spacing:.06em;}
@@ -423,6 +424,8 @@ body{
 @media (max-height:700px){
   .limg{width:102px;}
   .chrono{font-size:min(21vw,82px);}
+  .obj-v{font-size:clamp(26px,8vw,32px);}
+  .alerte{font-size:9px;padding:4px 9px;}
   .tap{width:106px;height:106px;font-size:22px;}
   .anneau{width:134px;height:134px;} .lueur{width:160px;height:160px;}
   .bas{gap:9px;} .score{font-size:21px;}
