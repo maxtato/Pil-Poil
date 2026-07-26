@@ -267,17 +267,36 @@ body{
 .infos:focus-visible{outline:3px solid var(--sur);outline-offset:2px;}
 
 /* ---------- feuilles ---------- */
-.voile{position:absolute;inset:0;background:rgba(10,9,7,.45);display:none;z-index:8;}
-.voile.on{display:block;}
+.voile{position:absolute;inset:0;background:rgba(10,9,7,.45);display:none;z-index:8;
+  backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);}
+.voile.on{display:block;animation:voileF .25s ease-out both;}
+@keyframes voileF{from{opacity:0}to{opacity:1}}
 .feuille{position:absolute;left:14px;right:14px;bottom:14px;z-index:9;
-  background:#FDF9EF;color:#17140F;border:none;border-radius:28px;
-  box-shadow:0 18px 44px rgba(0,0,0,.28);
-  padding:18px;display:none;flex-direction:column;gap:9px;}
-.feuille.on{display:flex;}
-.feuille h2{font-size:19px;font-weight:900;letter-spacing:-.02em;margin-bottom:2px;}
+  background:#FDF9EF;color:#17140F;border:none;border-radius:30px;
+  box-shadow:0 24px 60px rgba(0,0,0,.34);
+  padding:14px 18px 16px;display:none;flex-direction:column;gap:9px;}
+.feuille.on{display:flex;animation:feuilleIn .44s cubic-bezier(.22,1.18,.36,1) both;}
+@keyframes feuilleIn{0%{opacity:0;transform:translateY(48px) scale(.97);}100%{opacity:1;transform:none;}}
+/* poignée de tiroir + entrée en cascade des lignes */
+.feuille::before{content:"";display:block;width:40px;height:5px;border-radius:99px;
+  background:rgba(23,20,15,.14);margin:0 auto 4px;flex:0 0 auto;}
+.feuille.on > *{animation:ligneIn .38s cubic-bezier(.2,.9,.3,1) both;}
+.feuille.on > *:nth-child(1){animation-delay:.02s}
+.feuille.on > *:nth-child(2){animation-delay:.05s}
+.feuille.on > *:nth-child(3){animation-delay:.08s}
+.feuille.on > *:nth-child(4){animation-delay:.11s}
+.feuille.on > *:nth-child(5){animation-delay:.14s}
+.feuille.on > *:nth-child(6){animation-delay:.17s}
+.feuille.on > *:nth-child(7){animation-delay:.20s}
+.feuille.on > *:nth-child(8){animation-delay:.23s}
+.feuille.on > *:nth-child(9){animation-delay:.26s}
+@keyframes ligneIn{0%{opacity:0;transform:translateY(14px);}100%{opacity:1;transform:none;}}
+.feuille h2{font-size:20px;font-weight:900;letter-spacing:-.02em;margin-bottom:2px;}
 .ligne{display:flex;justify-content:space-between;align-items:center;gap:10px;
-  border:none;border-radius:18px;padding:13px 16px;
-  font-size:15px;font-weight:900;background:#EFE4D3;cursor:pointer;font-family:inherit;color:inherit;}
+  border:none;border-radius:20px;padding:13px 16px;
+  font-size:15px;font-weight:900;background:#EFE4D3;cursor:pointer;font-family:inherit;color:inherit;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.35), 0 1px 2px rgba(23,20,15,.05);
+  transition:transform .12s ease, filter .12s ease;}
 /* --- teintes appliquées à toutes les feuilles --- */
 .ligne.or{background:var(--ui-or);color:var(--ui-or-txt);}
 .ligne.vert{background:var(--ui-vert);color:var(--ui-vert-txt);}
@@ -290,7 +309,7 @@ body{
 .ligne.on .etoiles{color:#F5C518;}
 .ligne.on .etoiles .off{color:rgba(23,20,15,.25);}
 .choix button.on{background:var(--ui-vert);color:var(--ui-vert-txt);}
-.ligne:active{filter:brightness(.93);}
+.ligne:active{filter:brightness(.94);transform:scale(.975);}
 #f-modes [data-mode="campagne"]{background:var(--ui-or);color:var(--ui-or-txt);}
 #f-modes [data-mode="entrainement"]{background:var(--ui-vert);color:var(--ui-vert-txt);}
 #f-modes [data-mode="duel"]{background:var(--ui-rouge);color:var(--ui-rouge-txt);}
@@ -298,8 +317,10 @@ body{
 #f-modes [data-mode="survie"] .e{opacity:.8;}
 #f-modes [data-mode="survie"] .fl{opacity:.85;}
 #f-modes [data-mode]:active{filter:brightness(.93);}
-.ligne .e{font-weight:900;opacity:.55;font-size:12.5px;margin-left:14px;}
-.ligne > span:first-child{display:flex;align-items:baseline;flex-wrap:wrap;gap:0 4px;}
+.ligne .e{font-weight:800;opacity:.55;font-size:11.5px;letter-spacing:.02em;margin-left:14px;}
+/* hiérarchie nette : titre au-dessus, description en dessous */
+.ligne > span:first-child{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;}
+.ligne > span:first-child .e{margin-left:0;}
 /* les étoiles de résultat restent d'un jaune vif, partout, tout le temps */
 .ligne .etoiles{letter-spacing:1px;font-size:12px;color:#F5C518;}
 .ligne .etoiles .off{color:#CFC5AE;}
@@ -311,14 +332,15 @@ body{
 .reglette .valeur{flex:1;text-align:center;font-size:30px;font-weight:900;letter-spacing:-.02em;}
 .choix{display:flex;gap:6px;}
 .choix button{flex:1;border:none;border-radius:16px;background:#EFE4D3;
-  font:inherit;font-size:10.5px;font-weight:900;letter-spacing:.05em;padding:10px 3px;
-  cursor:pointer;color:#17140F;}
+  font:inherit;font-size:10.5px;font-weight:900;letter-spacing:.05em;padding:11px 3px;
+  cursor:pointer;color:#17140F;transition:transform .12s ease;}
+.choix button:active{transform:scale(.95);}
 .jrs{display:flex;flex-direction:column;gap:7px;}
 .jr{display:flex;align-items:center;gap:8px;}
 .jr .pion{width:26px;height:26px;border-radius:50%;flex:0 0 auto;}
 .jr input{flex:1;min-width:0;border:none;border-radius:16px;background:#EFE4D3;
   font:inherit;font-size:15px;font-weight:800;padding:10px 12px;color:#17140F;}
-.jr input:focus{outline:none;background:#FFF;}
+.jr input:focus{outline:none;background:#FFF;box-shadow:0 0 0 3px rgba(47,160,160,.35);}
 .jr .sup{width:34px;flex:0 0 auto;border:none;background:none;font:inherit;font-size:17px;
   font-weight:900;opacity:.4;cursor:pointer;color:#17140F;}
 .themes{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:2px;}
@@ -332,7 +354,12 @@ body{
 .th .pt{width:38%;aspect-ratio:1;border-radius:50%;margin-top:7px;}
 .th .nm{position:absolute;left:0;right:0;bottom:5px;font-size:7.5px;font-weight:900;
   letter-spacing:.08em;text-align:center;opacity:.55;}
+.th{transition:transform .12s ease;}
+.th:active{transform:scale(.95);}
 .th.on{box-shadow:0 0 0 3px #17140F;}
+.th.on::after{content:"✓";position:absolute;top:5px;right:5px;width:18px;height:18px;
+  border-radius:50%;background:#17140F;color:#FFF;font-size:11px;font-weight:900;
+  display:flex;align-items:center;justify-content:center;}
 .th.alea{justify-content:center;background:#EFE4D3;color:#17140F;
   font-size:10px;font-weight:900;letter-spacing:.06em;line-height:1.3;padding-bottom:9px;}
 .classement{display:flex;flex-direction:column;gap:7px;}
@@ -388,6 +415,7 @@ body{
   .gain.go,.part,.pilule.on,.coeur.secousse,#cadre.eclair,.onde.go,
   .coeur.intro .tete-obj,.coeur.intro .zone-chrono,.toast.on,
   .limg.presse,#cadre.accueil .limg,
+  .voile.on,.feuille.on,.feuille.on > *,
   .fen-boite,.chip,.carte-obj,.fen-et .et,.fen-pil{animation:none;opacity:1;}
   .gain.go{opacity:1;}
 }
@@ -493,10 +521,10 @@ body{
 
   <div class="feuille" id="f-modes">
     <h2>Mode de jeu</h2>
-    <button class="ligne" data-mode="campagne"><span>CAMPAGNE <span class="e">difficulté croissante</span></span><span class="fl">›</span></button>
-    <button class="ligne" data-mode="survie"><span>SURVIE <span class="e">3 vies, sans plafond</span></span><span class="fl">›</span></button>
-    <button class="ligne" data-mode="entrainement"><span>ENTRAÎNEMENT <span class="e">cible au choix, sans fin</span></span><span class="fl">›</span></button>
-    <button class="ligne" data-mode="duel"><span>DUEL <span class="e">à plusieurs, chacun son tour</span></span><span class="fl">›</span></button>
+    <button class="ligne" data-mode="campagne"><span>🏁 CAMPAGNE <span class="e">difficulté croissante</span></span><span class="fl">›</span></button>
+    <button class="ligne" data-mode="survie"><span>🛡️ SURVIE <span class="e">3 vies, sans plafond</span></span><span class="fl">›</span></button>
+    <button class="ligne" data-mode="entrainement"><span>🎯 ENTRAÎNEMENT <span class="e">cible au choix, sans fin</span></span><span class="fl">›</span></button>
+    <button class="ligne" data-mode="duel"><span>⚔️ DUEL <span class="e">à plusieurs, chacun son tour</span></span><span class="fl">›</span></button>
     <button class="ligne or" id="modes-fermer" data-fermer="1"><span>Fermer</span><span class="e">✕</span></button>
   </div>
 
